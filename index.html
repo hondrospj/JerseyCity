@@ -1816,26 +1816,48 @@ function getESTParts(date=new Date()){
   return { y:+p.find(x=>x.type==="year").value, m:+p.find(x=>x.type==="month").value, d:+p.find(x=>x.type==="day").value };
 }
 
-function startOfTodayLocalTZ_ISO(){
-  const { y, m, d } = getESTParts(new Date()); // still ok; uses TZ inside fmtPartsYMD
-  // Create a Date that represents midnight in TZ, without hard-coding UTC offset
-  // Trick: format a TZ-midnight as parts, then find its UTC timestamp by searching.
-  const target = { y, m, d, hh: 0, mm: 0 };
+function getTZDateTimeParts(date=new Date()){
+  const p = new Intl.DateTimeFormat("en-US", {
+    timeZone: TZ,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23"
+  }).formatToParts(date);
 
-  // brute-force find the UTC time whose TZ parts match target (fast: only checks within 30 hours)
-  const now = Date.now();
-  const base = new Date(Date.UTC(y, m-1, d, 0, 0, 0)).getTime(); // around the right day
-  for (let t = base - 12*3600*1000; t <= base + 18*3600*1000; t += 5*60*1000){
-    const p = getESTParts(new Date(t));
-    const time = fmtTime.formatToParts(new Date(t));
-    const hh = +time.find(x=>x.type==="hour").value % 24;
-    const mm = +time.find(x=>x.type==="minute").value;
-    if (p.y===target.y && p.m===target.m && p.d===target.d && hh===0 && mm===0){
-      return new Date(t).toISOString();
-    }
+  const val = type => p.find(x => x.type === type)?.value || "0";
+
+  return {
+    y:  +val("year"),
+    m:  +val("month"),
+    d:  +val("day"),
+    hh: (+val("hour")) % 24,
+    mm: +val("minute"),
+    ss: +val("second")
+  };
+}
+
+function zonedTimeToUtcISO(y, m, d, hh=0, mm=0, ss=0){
+  let guess = Date.UTC(y, m-1, d, hh, mm, ss);
+
+  for(let i=0; i<4; i++){
+    const got = getTZDateTimeParts(new Date(guess));
+    const gotAsUTC = Date.UTC(got.y, got.m-1, got.d, got.hh, got.mm, got.ss);
+    const wantAsUTC = Date.UTC(y, m-1, d, hh, mm, ss);
+    const delta = wantAsUTC - gotAsUTC;
+    if(delta === 0) break;
+    guess += delta;
   }
-  // fallback (shouldn't happen)
-  return new Date(base).toISOString();
+
+  return new Date(guess).toISOString();
+}
+
+function startOfTodayLocalTZ_ISO(){
+  const { y, m, d } = getESTParts(new Date());
+  return zonedTimeToUtcISO(y, m, d, 0, 0, 0);
 }
 function startOfYearEST_ISO(y){ return new Date(Date.UTC(y,0,1,5,0,0)).toISOString(); }
 function nowISO(){ return new Date().toISOString(); }
@@ -1915,20 +1937,7 @@ function setTXTStatus(msg){ if(txtNote) txtNote.textContent = msg || ""; }
   return { minor:T.minorLow, moderate:T.moderateLow, major:T.majorLow };
 }
 
-      function stageNameFromDisplayFt(ft){
-  const T = THRESH[DISPLAY_DATUM];
-  if(ft >= T.majorLow) return "Major";
-  if(ft >= T.moderateLow) return "Moderate";
-  if(ft >= T.minorLow) return "Minor";
-  return "Below";
-}
-
-function stageColorVar(stage){
-  if(stage==="Major") return "var(--major)";
-  if(stage==="Moderate") return "var(--moderate)";
-  if(stage==="Minor") return "var(--minor)";
-  return "var(--muted)";
-}
+      
 
 // Build segments of consecutive points where stage >= Minor
 function buildFloodSegments(points){
@@ -1958,6 +1967,156 @@ function buildFloodSegments(points){
   return segs;
 }
 
+function stageNameFromDisplayFt(ft){
+  const T = THRESH[DISPLAY_DATUM];
+  if(ft >= T.majorLow) return "Major";
+  if(ft >= T.moderateLow) return "Moderate";
+  if(ft >= T.minorLow) return "Minor";
+  return "Below";
+}
+
+function stageColorVar(stage){
+  if(stage==="Major") return "var(--major)";
+  if(stage==="Moderate") return "var(--moderate)";
+  if(stage==="Minor") return "var(--minor)";
+  return "var(--muted)";
+}
+
+function interpFtAtMs(a, b, ms){
+  const dt = b.ms - a.ms;
+  if(!Number.isFinite(dt) || dt <= 0) return Number(a.ftDisplay);
+  const r = (ms - a.ms) / dt;
+  return a.ftDisplay + r * (b.ftDisplay - a.ftDisplay);
+}
+
+function isoFromMs(ms){
+  return new Date(ms).toISOString();
+}
+
+function stageRank(stage){
+  if(stage === "Major") return 3;
+  if(stage === "Moderate") return 2;
+  if(stage === "Minor") return 1;
+  return 0;
+}
+
+function splitIntervalByFloodThresholds(tA, tB, ftA, ftB){
+  const T = THRESH[DISPLAY_DATUM];
+  const thresholds = [T.minorLow, T.moderateLow, T.majorLow];
+  const cuts = [tA, tB];
+
+  for(const th of thresholds){
+    const dA = ftA - th;
+    const dB = ftB - th;
+
+    if((dA < 0 && dB > 0) || (dA > 0 && dB < 0)){
+      const ratio = (th - ftA) / (ftB - ftA);
+      const tCross = tA + ratio * (tB - tA);
+      if(tCross > tA && tCross < tB) cuts.push(tCross);
+    }
+  }
+
+  cuts.sort((a,b)=>a-b);
+
+  const pieces = [];
+  for(let i=0; i<cuts.length-1; i++){
+    const s = cuts[i];
+    const e = cuts[i+1];
+    if(e <= s) continue;
+
+    const mid = (s + e) / 2;
+    const midFt = ftA + ((mid - tA) / (tB - tA)) * (ftB - ftA);
+    const sFt = ftA + ((s - tA) / (tB - tA)) * (ftB - ftA);
+    const eFt = ftA + ((e - tA) / (tB - tA)) * (ftB - ftA);
+    const stage = stageNameFromDisplayFt(midFt);
+
+    pieces.push({
+      startMs:s,
+      endMs:e,
+      stage,
+      peakFt:Math.max(sFt, eFt, midFt)
+    });
+  }
+
+  return pieces;
+}
+
+function buildExactFloodAccounting(rawPoints, t0, t1){
+  const out = {
+    minorMs:0,
+    moderateMs:0,
+    majorMs:0,
+    pieces:[],
+    segments:[]
+  };
+
+  const pts = (rawPoints || [])
+    .filter(p => Number.isFinite(p.ms) && Number.isFinite(p.ftDisplay))
+    .sort((a,b)=>a.ms-b.ms);
+
+  if(pts.length < 2) return out;
+
+  for(let i=0; i<pts.length-1; i++){
+    const a = pts[i];
+    const b = pts[i+1];
+
+    if(b.ms <= t0 || a.ms >= t1) continue;
+
+    const st = Math.max(a.ms, t0);
+    const en = Math.min(b.ms, t1);
+    if(en <= st) continue;
+
+    const ftS = interpFtAtMs(a, b, st);
+    const ftE = interpFtAtMs(a, b, en);
+    const pieces = splitIntervalByFloodThresholds(st, en, ftS, ftE);
+
+    for(const piece of pieces){
+      const dur = piece.endMs - piece.startMs;
+
+      if(piece.stage === "Major") out.majorMs += dur;
+      else if(piece.stage === "Moderate") out.moderateMs += dur;
+      else if(piece.stage === "Minor") out.minorMs += dur;
+
+      out.pieces.push(piece);
+    }
+  }
+
+  let cur = null;
+
+  for(const p of out.pieces){
+    if(p.stage === "Below"){
+      if(cur){
+        out.segments.push(cur);
+        cur = null;
+      }
+      continue;
+    }
+
+    if(!cur){
+      cur = {
+        startMs:p.startMs,
+        endMs:p.endMs,
+        peakFt:p.peakFt,
+        peakStage:p.stage
+      };
+    }else{
+      cur.endMs = p.endMs;
+
+      if(p.peakFt > cur.peakFt){
+        cur.peakFt = p.peakFt;
+      }
+
+      if(stageRank(p.stage) > stageRank(cur.peakStage)){
+        cur.peakStage = p.stage;
+      }
+    }
+  }
+
+  if(cur) out.segments.push(cur);
+
+  return out;
+}
+
 function updateFloodOutlook48(){
   if(!f48MinorHrsEl || !f48ModerHrsEl || !f48MajorHrsEl || !f48ListEl || !f48MetaEl) return;
 
@@ -1969,8 +2128,8 @@ function updateFloodOutlook48(){
     f48ListEl.innerHTML = `
       <div class="event">
         <div class="eventLeft">
-          <div class="eventWhen">NOAA/PETSS unavailable</div>
-          <div class="eventSub">No forecast points loaded</div>
+          <div class="eventWhen">Forecast unavailable</div>
+          <div class="eventSub">NOAA/PETSS data did not load</div>
         </div>
         <div class="eventBadge" style="color:var(--muted)">—</div>
       </div>`;
@@ -1978,62 +2137,28 @@ function updateFloodOutlook48(){
     return;
   }
 
-// Next 72h window anchored to NOW (not forecast file start)
-const nowMs = Date.now();
-const t0 = nowMs;
-const t1 = nowMs + 72 * 3600 * 1000;
+  const nowMs = Date.now();
+  const t0 = nowMs;
+  const t1 = nowMs + 72 * 3600 * 1000;
 
-
-  // Convert to DISPLAY datum and keep only 48h
-  const pts = pred
+  const rawPts = pred
     .map(p=>{
       const ms = new Date(p.t).getTime();
       const mllw = Number(p.ft);
       if(!Number.isFinite(ms) || !Number.isFinite(mllw)) return null;
-      if(ms < t0 || ms > t1) return null;
-      const ftDisplay = toDisplayFtFromMllw(mllw);
-      return { t: p.t, ms, ftDisplay };
+      return { t:p.t, ms, ftDisplay:toDisplayFtFromMllw(mllw) };
     })
     .filter(Boolean)
     .sort((a,b)=>a.ms-b.ms);
 
-  if(!pts.length){
-    f48MinorHrsEl.textContent = "0.0";
-    f48ModerHrsEl.textContent = "0.0";
-    f48MajorHrsEl.textContent = "0.0";
-    f48ListEl.innerHTML = `
-      <div class="event">
-        <div class="eventLeft">
-          <div class="eventWhen">No flood periods forecast</div>
-          <div class="eventSub">Next 72 hours stay flooding free</div>
-        </div>
-        <div class="eventBadge" style="color:var(--ok)">Below</div>
-      </div>`;
-    f48MetaEl.textContent = `${fmtNiceDate(pred[0].t)} → ${fmtNiceDate(new Date(t1).toISOString())}`;
-    return;
-  }
-
-  // Count duration in each stage using dt between points
-  let minorMs=0, moderMs=0, majorMs=0;
-
-  for(let i=0;i<pts.length;i++){
-    const a = pts[i];
-    const b = pts[i+1] || null;
-    const dt = b ? Math.max(0, b.ms - a.ms) : 15*60*1000; // assume 15m for last step
-    const stage = stageNameFromDisplayFt(a.ftDisplay);
-
-    if(stage==="Major") majorMs += dt;
-    else if(stage==="Moderate") moderMs += dt;
-    else if(stage==="Minor") minorMs += dt;
-  }
-
+  const accounting = buildExactFloodAccounting(rawPts, t0, t1);
   const msToHours = ms => (ms / 3600000);
-  f48MinorHrsEl.textContent = msToHours(minorMs).toFixed(1);
-  f48ModerHrsEl.textContent = msToHours(moderMs).toFixed(1);
-  f48MajorHrsEl.textContent = msToHours(majorMs).toFixed(1);
 
-  // Build flood segments list
-  const segs = buildFloodSegments(pts);
+  f48MinorHrsEl.textContent = msToHours(accounting.minorMs).toFixed(1);
+  f48ModerHrsEl.textContent = msToHours(accounting.moderateMs).toFixed(1);
+  f48MajorHrsEl.textContent = msToHours(accounting.majorMs).toFixed(1);
+
+  const segs = accounting.segments;
 
   if(!segs.length){
     f48ListEl.innerHTML = `
@@ -2046,9 +2171,10 @@ const t1 = nowMs + 72 * 3600 * 1000;
       </div>`;
   }else{
     const show = segs.slice(0,4);
+
     f48ListEl.innerHTML = show.map(seg=>{
-      const durH = Math.max(0.25, (seg.endMs - seg.startMs) / 3600000);
-      const when = `${fmtNiceDate(seg.startT)} · ${fmtESTTime(seg.startT)} → ${fmtESTTime(seg.endT)}`;
+      const durH = Math.max(0, (seg.endMs - seg.startMs) / 3600000);
+      const when = `${fmtNiceDate(isoFromMs(seg.startMs))} · ${fmtESTTime(isoFromMs(seg.startMs))} → ${fmtESTTime(isoFromMs(seg.endMs))}`;
       const sub  = `${durH.toFixed(1)}h · Peak ${seg.peakFt.toFixed(2)} ${unitText()}`;
       const badgeColor = stageColorVar(seg.peakStage);
 
@@ -2061,10 +2187,21 @@ const t1 = nowMs + 72 * 3600 * 1000;
           <div class="eventBadge" style="color:${badgeColor}">${seg.peakStage}</div>
         </div>`;
     }).join("");
+
+    if(segs.length > show.length){
+      f48ListEl.innerHTML += `
+        <div class="event">
+          <div class="eventLeft">
+            <div class="eventWhen">${segs.length - show.length} additional flood period(s)</div>
+            <div class="eventSub">Included in the hour totals above</div>
+          </div>
+          <div class="eventBadge" style="color:var(--muted)">More</div>
+        </div>`;
+    }
   }
 
-f48MetaEl.textContent =
-  `${fmtNiceDate(new Date(t0).toISOString())} → ${fmtNiceDate(new Date(t1).toISOString())} · Based on NOAA/PETSS`;
+  f48MetaEl.textContent =
+    `${fmtNiceDate(isoFromMs(t0))} → ${fmtNiceDate(isoFromMs(t1))} · Based on NOAA/PETSS`;
 }
 
 function updatePred24RangeCard(){
