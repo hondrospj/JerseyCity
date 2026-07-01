@@ -2,18 +2,26 @@
   "source": "individual_site_predictions",
   "method": {
     "detrending": "high_ft_navd88 - site_linear_sea_level_trend_ft_per_year * (event_decimal_year - 2026)",
+    "trend": "site linear sea-level trend is fit after removing monthly seasonal effects from cached monthly mean sea level",
     "futureFit": "empirical residual exceedance probabilities evaluated at jurisdiction sea-level scenario deltas",
     "uncertainty": "analytical binomial p05/p50/p95 count approximation for annual high-tide draws; no Monte Carlo sampling",
     "bins": "exclusive minor/moderate/major NAVD88 threshold bins"
   },
   "status": "no-high-tide-pool",
   "highTideCount": 0,
-  "trendFtPerYear": 0.01885596,
+  "trendFtPerYear": 0.01888744,
   "trendSource": {
     "station": "8518750",
     "source": "NOAA monthly_mean MSL",
     "datum": "MSL",
-    "monthlyPoints": 317
+    "trendMethod": "deseasonalized_monthly_mean_linear_regression",
+    "monthlyPoints": 317,
+    "rawSlopeFtPerYear": 0.01885596
   },
-  "scenarios": {}
+  "scenarios": {
+    "Baseline": [],
+    "Low": [],
+    "Intermediate": [],
+    "High": []
+  }
 }

@@ -6,9 +6,29 @@
   "source": "NOAA monthly_mean MSL",
   "updated_utc": "2026-06-30T15:50:54.116Z",
   "regression": {
-    "slopeFtPerYear": 0.018855957187496733,
-    "interceptFt": -37.68274932265571,
-    "monthlyPoints": 317
+    "slopeFtPerYear": 0.018887438980419398,
+    "interceptFt": -37.74612873051589,
+    "monthlyPoints": 317,
+    "method": "deseasonalized_monthly_mean_linear_regression",
+    "rawRegression": {
+      "slopeFtPerYear": 0.018855957187491633,
+      "interceptFt": -37.68274932264544,
+      "monthlyPoints": 317
+    },
+    "seasonalAdjustmentsFt": {
+      "01": -0.355967,
+      "02": -0.369983,
+      "03": -0.170332,
+      "04": 0.016652,
+      "05": 0.076414,
+      "06": 0.171724,
+      "07": 0.15623,
+      "08": 0.205812,
+      "09": 0.312818,
+      "10": 0.275669,
+      "11": -0.054825,
+      "12": -0.233319
+    }
   },
   "daily": [],
   "monthly": [
@@ -1597,5 +1617,37 @@
       "ft": 0.246,
       "days": null
     }
-  ]
+  ],
+  "regressionRaw": {
+    "slopeFtPerYear": 0.018855957187491633,
+    "interceptFt": -37.68274932264544,
+    "monthlyPoints": 317
+  },
+  "regressionDeseasonalized": {
+    "slopeFtPerYear": 0.018887438980419398,
+    "interceptFt": -37.74612873051589,
+    "monthlyPoints": 317,
+    "method": "deseasonalized_monthly_mean_linear_regression",
+    "rawRegression": {
+      "slopeFtPerYear": 0.018855957187491633,
+      "interceptFt": -37.68274932264544,
+      "monthlyPoints": 317
+    },
+    "seasonalAdjustmentsFt": {
+      "01": -0.355967,
+      "02": -0.369983,
+      "03": -0.170332,
+      "04": 0.016652,
+      "05": 0.076414,
+      "06": 0.171724,
+      "07": 0.15623,
+      "08": 0.205812,
+      "09": 0.312818,
+      "10": 0.275669,
+      "11": -0.054825,
+      "12": -0.233319
+    }
+  },
+  "trendMethod": "deseasonalized_monthly_mean_linear_regression",
+  "regression_updated_utc": "2026-07-01T02:02:04.013284+00:00"
 }
