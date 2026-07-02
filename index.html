@@ -1642,9 +1642,10 @@ a.brand *{
     .shorely-has-help{
       position:relative;
     }
-    .shorely-has-help > .hrow:first-child,
-    .shorely-has-help > .accHeader{
-      padding-left:42px;
+    .shorely-has-help > .hrow,
+    .shorely-has-help > .accHeader,
+    .shorely-has-help > .panelTitle{
+      padding-left:48px;
     }
     .shorelyHelpBtn{
       position:absolute;
@@ -1672,10 +1673,12 @@ a.brand *{
     }
     .shorelyHelpPopover{
       position:fixed;
-      left:50%;
-      top:calc(16px + env(safe-area-inset-top, 0px));
-      transform:translateX(-50%);
+      left:12px;
+      top:calc(48px + env(safe-area-inset-top, 0px));
+      transform:none;
       width:min(340px, calc(100vw - 24px));
+      max-height:min(380px, calc(100vh - 24px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)));
+      overflow:auto;
       z-index:80;
       padding:14px 15px 13px;
       border:1px solid rgba(191,219,254,.30);
@@ -1769,9 +1772,10 @@ a.brand *{
       .kicker{
         font-size:11px;
       }
-      .shorely-has-help > .hrow:first-child,
-      .shorely-has-help > .accHeader{
-        padding-left:38px;
+      .shorely-has-help > .hrow,
+      .shorely-has-help > .accHeader,
+      .shorely-has-help > .panelTitle{
+        padding-left:42px;
       }
       .shorelyHelpBtn{
         top:10px;
@@ -2378,7 +2382,8 @@ function ensureGaugeMap(){
         iconSize: [24, 32],
         iconAnchor: [12, 30],
         popupAnchor: [0, -28]
-      })
+      }),
+      zIndexOffset: selected ? 1000 : 0
     });
 
     const popup = `
@@ -2396,7 +2401,9 @@ function ensureGaugeMap(){
 
 const def = mapGauges.find(g => String(g.id) === DEFAULT_GAUGE_ID);
 
-if(def){
+if(bounds.length > 1){
+  _gaugeMap.fitBounds(bounds, { padding:[30,30], maxZoom:9 });
+} else if(def){
   _gaugeMap.setView([def.lat, def.lon], DEFAULT_GAUGE_ZOOM);
 } else if(bounds.length){
   _gaugeMap.fitBounds(bounds, { padding:[30,30] });
@@ -4684,7 +4691,7 @@ function ensureAnnual(){
         },
         y: {
           stacked: true,
-          title:{display:true, text:"floods", color:"rgba(169,182,211,.9)", font:{weight:"900"}},
+          title:{display:true, text:"Floods", color:"rgba(169,182,211,.9)", font:{weight:"900"}},
           ticks: { color: "rgba(169,182,211,.9)", precision: 0 },
           grid: { color: "rgba(255,255,255,.06)" }
         },
@@ -6844,7 +6851,7 @@ function renderDOYCumPanel(){
         grid:{display:false}
       },
       y:{
-        title:{display:true, text:"floods", color:"rgba(169,182,211,.9)", font:{weight:"900"}},
+        title:{display:true, text:"Floods", color:"rgba(169,182,211,.9)", font:{weight:"900"}},
         ticks:{color:"rgba(169,182,211,.9)", precision:0},
         grid:{color:"rgba(255,255,255,.06)"}
       },
@@ -7062,7 +7069,7 @@ function ensureMonthAvgChart(){
         
         y:{
           stacked:true,
-          title:{display:true, text:"floods", color:"rgba(169,182,211,.9)", font:{weight:"900"}},
+          title:{display:true, text:"Floods", color:"rgba(169,182,211,.9)", font:{weight:"900"}},
           ticks:{
             color:"rgba(169,182,211,.9)",
 
@@ -7380,7 +7387,332 @@ const DATUMS = ["MLLW","NAVD88","MSL","MHHW"];
 const OFFSET_FROM_MLLW = {"MLLW":0.0,"NAVD88":-3.03,"MSL":-2.92,"MHHW":-5.77};
 const THRESH = {"MLLW":{"minorLow":7.3,"moderateLow":8.5,"majorLow":10.0},"NAVD88":{"minorLow":4.27,"moderateLow":5.47,"majorLow":6.97},"MSL":{"minorLow":4.38,"moderateLow":5.58,"majorLow":7.08},"MHHW":{"minorLow":1.53,"moderateLow":2.73,"majorLow":4.23}};
 const TOP_TEN_MLLW = [{"date":"11-25-1950","ft":10.74},{"date":"10-25-1980","ft":9.23},{"date":"10-30-2012","ft":9.16},{"date":"10-29-2021","ft":8.91},{"date":"01-23-2016","ft":8.65},{"date":"05-12-2008","ft":8.6},{"date":"01-10-2024","ft":8.44},{"date":"08-21-2025","ft":8.22},{"date":"02-17-2003","ft":8.12},{"date":"04-12-2024","ft":8.06}];
-const GAUGES = [];
+const GAUGES = [
+  {
+    "name": "Absecon Creek at Absecon",
+    "agency": "USGS",
+    "id": "01410510",
+    "lat": 39.423056,
+    "lon": -74.5,
+    "url": "https://hondrospj.github.io/Absecon/",
+    "repo": "Absecon"
+  },
+  {
+    "name": "Absecon Channel at Atlantic City",
+    "agency": "USGS",
+    "id": "01410600",
+    "lat": 39.377778,
+    "lon": -74.423611,
+    "url": "https://hondrospj.github.io/AbseconChannel/",
+    "repo": "AbseconChannel"
+  },
+  {
+    "name": "Atlantic City",
+    "agency": "NOAA",
+    "id": "8534720",
+    "lat": 39.355,
+    "lon": -74.4183,
+    "url": "https://hondrospj.github.io/Atlantic-City/",
+    "repo": "Atlantic-City"
+  },
+  {
+    "name": "Ingram Thorofare at Avalon",
+    "agency": "USGS",
+    "id": "01411355",
+    "lat": 39.108611,
+    "lon": -74.741944,
+    "url": "https://hondrospj.github.io/Avalon/",
+    "repo": "Avalon"
+  },
+  {
+    "name": "Barnegat Bay at Barnegat Light",
+    "agency": "USGS",
+    "id": "01409125",
+    "lat": 39.760833,
+    "lon": -74.110556,
+    "url": "https://hondrospj.github.io/BarnegatLight/",
+    "repo": "BarnegatLight"
+  },
+  {
+    "name": "Shark River at Belmar",
+    "agency": "USGS",
+    "id": "01407770",
+    "lat": 40.185556,
+    "lon": -74.026111,
+    "url": "https://hondrospj.github.io/Belmar/",
+    "repo": "Belmar"
+  },
+  {
+    "name": "Bergen Point",
+    "agency": "NOAA",
+    "id": "8519483",
+    "lat": 40.63667,
+    "lon": -74.14167,
+    "url": "https://hondrospj.github.io/BergenPoint/",
+    "repo": "BergenPoint"
+  },
+  {
+    "name": "Maurice River at Bivalve",
+    "agency": "USGS",
+    "id": "01412150",
+    "lat": 39.2325,
+    "lon": -75.032778,
+    "url": "https://hondrospj.github.io/Bivalve/",
+    "repo": "Bivalve"
+  },
+  {
+    "name": "Bridesburg",
+    "agency": "NOAA",
+    "id": "8546252",
+    "lat": 39.98333,
+    "lon": -75.075,
+    "url": "https://hondrospj.github.io/Bridesburg/",
+    "repo": "Bridesburg"
+  },
+  {
+    "name": "Burlington",
+    "agency": "NOAA",
+    "id": "8539094",
+    "lat": 40.08,
+    "lon": -74.873333,
+    "url": "https://hondrospj.github.io/Burlington/",
+    "repo": "Burlington"
+  },
+  {
+    "name": "Cape May",
+    "agency": "NOAA",
+    "id": "8536110",
+    "lat": 38.96833,
+    "lon": -74.96,
+    "url": "https://hondrospj.github.io/CapeMay/",
+    "repo": "CapeMay"
+  },
+  {
+    "name": "Cape May Harbor at Cape May",
+    "agency": "USGS",
+    "id": "01411390",
+    "lat": 38.948333,
+    "lon": -74.888889,
+    "url": "https://hondrospj.github.io/CapeMayHarbor/",
+    "repo": "CapeMayHarbor"
+  },
+  {
+    "name": "Delaware River (Washington Street)",
+    "agency": "NOAA",
+    "id": "8545240",
+    "lat": 39.9333,
+    "lon": -75.1417,
+    "url": "https://hondrospj.github.io/Delaware-River/",
+    "repo": "Delaware-River"
+  },
+  {
+    "name": "Cohancey River at Greenwich",
+    "agency": "USGS",
+    "id": "01413038",
+    "lat": 39.379167,
+    "lon": -75.355278,
+    "url": "https://hondrospj.github.io/Greenwich/",
+    "repo": "Greenwich"
+  },
+  {
+    "name": "Hackensack",
+    "agency": "USGS",
+    "id": "01378570",
+    "lat": 40.879167,
+    "lon": -74.04,
+    "url": "https://hondrospj.github.io/Hackensack/",
+    "repo": "Hackensack"
+  },
+  {
+    "name": "Inside Thorofare at Atlantic City",
+    "agency": "USGS",
+    "id": "01410560",
+    "lat": 39.353611,
+    "lon": -74.456944,
+    "url": "https://hondrospj.github.io/InsideThorofare/",
+    "repo": "InsideThorofare"
+  },
+  {
+    "name": "Raritan Bay at Keansburg",
+    "agency": "USGS",
+    "id": "01407081",
+    "lat": 40.449167,
+    "lon": -74.1475,
+    "url": "https://hondrospj.github.io/Keansburg/",
+    "repo": "Keansburg"
+  },
+  {
+    "name": "Watson Creek at Manasquan",
+    "agency": "USGS",
+    "id": "01408048",
+    "lat": 40.111667,
+    "lon": -74.044722,
+    "url": "https://hondrospj.github.io/Manasquan-/",
+    "repo": "Manasquan-"
+  },
+  {
+    "name": "Barnegat Bay at Mantoloking",
+    "agency": "USGS",
+    "id": "01408168",
+    "lat": 40.040556,
+    "lon": -74.054444,
+    "url": "https://hondrospj.github.io/Mantoloking/",
+    "repo": "Mantoloking"
+  },
+  {
+    "name": "Marcus Hook",
+    "agency": "NOAA",
+    "id": "8540433",
+    "lat": 39.81167,
+    "lon": -75.40944,
+    "url": "https://hondrospj.github.io/MarcusHook/",
+    "repo": "MarcusHook"
+  },
+  {
+    "name": "Beach Thorofare at Margate",
+    "agency": "USGS",
+    "id": "01411330",
+    "lat": 39.3375,
+    "lon": -74.513056,
+    "url": "https://hondrospj.github.io/Margate/",
+    "repo": "Margate"
+  },
+  {
+    "name": "Newark",
+    "agency": "NOAA",
+    "id": "8530882",
+    "lat": 40.6733,
+    "lon": -74.14,
+    "url": "https://hondrospj.github.io/Newark/",
+    "repo": "Newark"
+  },
+  {
+    "name": "Newbold Island",
+    "agency": "NOAA",
+    "id": "8548989",
+    "lat": 40.13731,
+    "lon": -74.75167,
+    "url": "https://hondrospj.github.io/Newbold-Island/",
+    "repo": "Newbold-Island"
+  },
+  {
+    "name": "Great Egg Harbor Bay at Ocean City",
+    "agency": "USGS",
+    "id": "01411320",
+    "lat": 39.285833,
+    "lon": -74.575556,
+    "url": "https://hondrospj.github.io/OceanCity/",
+    "repo": "OceanCity"
+  },
+  {
+    "name": "Arthur Kill at Perth Amboy",
+    "agency": "USGS",
+    "id": "01396060",
+    "lat": 40.503889,
+    "lon": -74.262222,
+    "url": "https://hondrospj.github.io/PerthAmboy/",
+    "repo": "PerthAmboy"
+  },
+  {
+    "name": "Reedy Point",
+    "agency": "NOAA",
+    "id": "8551910",
+    "lat": 39.558333,
+    "lon": -75.573333,
+    "url": "https://hondrospj.github.io/Reedy-Point/",
+    "repo": "Reedy-Point"
+  },
+  {
+    "name": "Sandy Hook",
+    "agency": "NOAA",
+    "id": "8531680",
+    "lat": 40.4667,
+    "lon": -74.01,
+    "url": "https://hondrospj.github.io/Sandy-Hook/",
+    "repo": "Sandy-Hook"
+  },
+  {
+    "name": "Shrewsbury River at Sea Bright",
+    "agency": "USGS",
+    "id": "01407600",
+    "lat": 40.365556,
+    "lon": -73.974722,
+    "url": "https://hondrospj.github.io/SeaBright/",
+    "repo": "SeaBright"
+  },
+  {
+    "name": "Ludlum Thorofare at Sea Isle",
+    "agency": "USGS",
+    "id": "01411350",
+    "lat": 39.157778,
+    "lon": -74.697778,
+    "url": "https://hondrospj.github.io/SeaIsle/",
+    "repo": "SeaIsle"
+  },
+  {
+    "name": "Barnegat Bay at Seaside Heights",
+    "agency": "USGS",
+    "id": "01408748",
+    "lat": 39.941389,
+    "lon": -74.083889,
+    "url": "https://hondrospj.github.io/SeasideHeights/",
+    "repo": "SeasideHeights"
+  },
+  {
+    "name": "Manahawkin Bay at Ship Bottom",
+    "agency": "USGS",
+    "id": "01409146",
+    "lat": 39.654167,
+    "lon": -74.185833,
+    "url": "https://hondrospj.github.io/ShipBottom/",
+    "repo": "ShipBottom"
+  },
+  {
+    "name": "Sluice Creek at South Dennis",
+    "agency": "USGS",
+    "id": "01411435",
+    "lat": 39.161667,
+    "lon": -74.832222,
+    "url": "https://hondrospj.github.io/SouthDennis/",
+    "repo": "SouthDennis"
+  },
+  {
+    "name": "Great Channel at Stone Harbor",
+    "agency": "USGS",
+    "id": "01411360",
+    "lat": 39.056944,
+    "lon": -74.765,
+    "url": "https://hondrospj.github.io/StoneHarbor/",
+    "repo": "StoneHarbor"
+  },
+  {
+    "name": "Little Egg Inlet at Tuckerton",
+    "agency": "USGS",
+    "id": "01409335",
+    "lat": 39.508889,
+    "lon": -74.324722,
+    "url": "https://hondrospj.github.io/Tuckerton/",
+    "repo": "Tuckerton"
+  },
+  {
+    "name": "Barnegat Bay at Waretown",
+    "agency": "USGS",
+    "id": "01409124",
+    "lat": 39.77,
+    "lon": -74.188333,
+    "url": "https://hondrospj.github.io/Waretown/",
+    "repo": "Waretown"
+  },
+  {
+    "name": "Wilmington",
+    "agency": "NOAA",
+    "id": "8550714",
+    "lat": 39.7183,
+    "lon": -75.52,
+    "url": "https://hondrospj.github.io/Wilmington/",
+    "repo": "Wilmington"
+  }
+];
 const FUTURE_SCENARIOS = [{"id":"Baseline","label":"Baseline"},{"id":"Low","label":"Low"},{"id":"Intermediate","label":"Intermediate"},{"id":"High","label":"High"}];
 const ATLANTIC_CITY_ANNUAL_COUNTS = [{"year":1920,"minor":0,"moderate":0,"major":0},{"year":1921,"minor":0,"moderate":0,"major":0},{"year":1922,"minor":null,"moderate":null,"major":null},{"year":1923,"minor":null,"moderate":null,"major":null},{"year":1924,"minor":null,"moderate":null,"major":null},{"year":1925,"minor":null,"moderate":null,"major":null},{"year":1926,"minor":0,"moderate":0,"major":0},{"year":1927,"minor":1,"moderate":0,"major":0},{"year":1928,"minor":0,"moderate":0,"major":0},{"year":1929,"minor":0,"moderate":0,"major":0},{"year":1930,"minor":0,"moderate":0,"major":0},{"year":1931,"minor":1,"moderate":0,"major":0},{"year":1932,"minor":2,"moderate":0,"major":0},{"year":1933,"minor":1,"moderate":0,"major":0},{"year":1934,"minor":0,"moderate":0,"major":0},{"year":1935,"minor":1,"moderate":0,"major":0},{"year":1936,"minor":0,"moderate":0,"major":0},{"year":1937,"minor":0,"moderate":0,"major":0},{"year":1938,"minor":1,"moderate":0,"major":0},{"year":1939,"minor":0,"moderate":0,"major":0},{"year":1940,"minor":0,"moderate":0,"major":0},{"year":1941,"minor":0,"moderate":0,"major":0},{"year":1942,"minor":0,"moderate":0,"major":0},{"year":1943,"minor":1,"moderate":0,"major":0},{"year":1944,"minor":2,"moderate":0,"major":0},{"year":1945,"minor":0,"moderate":0,"major":0},{"year":1946,"minor":0,"moderate":0,"major":0},{"year":1947,"minor":0,"moderate":0,"major":0},{"year":1948,"minor":0,"moderate":0,"major":0},{"year":1949,"minor":0,"moderate":0,"major":0},{"year":1950,"minor":3,"moderate":1,"major":0},{"year":1951,"minor":0,"moderate":0,"major":0},{"year":1952,"minor":0,"moderate":0,"major":0},{"year":1953,"minor":1,"moderate":1,"major":0},{"year":1954,"minor":0,"moderate":0,"major":0},{"year":1955,"minor":2,"moderate":0,"major":0},{"year":1956,"minor":0,"moderate":0,"major":0},{"year":1957,"minor":0,"moderate":0,"major":0},{"year":1958,"minor":0,"moderate":0,"major":0},{"year":1959,"minor":2,"moderate":0,"major":0},{"year":1960,"minor":2,"moderate":0,"major":1},{"year":1961,"minor":3,"moderate":0,"major":0},{"year":1962,"minor":3,"moderate":3,"major":0},{"year":1963,"minor":0,"moderate":0,"major":0},{"year":1964,"minor":0,"moderate":0,"major":0},{"year":1965,"minor":0,"moderate":0,"major":0},{"year":1966,"minor":1,"moderate":0,"major":0},{"year":1967,"minor":0,"moderate":0,"major":0},{"year":1968,"minor":1,"moderate":0,"major":0},{"year":1969,"minor":1,"moderate":0,"major":0},{"year":1970,"minor":1,"moderate":0,"major":0},{"year":1971,"minor":0,"moderate":0,"major":0},{"year":1972,"minor":4,"moderate":0,"major":0},{"year":1973,"minor":0,"moderate":0,"major":0},{"year":1974,"minor":0,"moderate":0,"major":0},{"year":1975,"minor":0,"moderate":0,"major":0},{"year":1976,"minor":0,"moderate":0,"major":0},{"year":1977,"minor":4,"moderate":0,"major":0},{"year":1978,"minor":1,"moderate":0,"major":0},{"year":1979,"minor":3,"moderate":0,"major":0},{"year":1980,"minor":1,"moderate":0,"major":0},{"year":1981,"minor":0,"moderate":0,"major":0},{"year":1982,"minor":0,"moderate":0,"major":0},{"year":1983,"minor":0,"moderate":0,"major":0},{"year":1984,"minor":0,"moderate":1,"major":0},{"year":1985,"minor":1,"moderate":0,"major":0},{"year":1986,"minor":1,"moderate":0,"major":0},{"year":1987,"minor":1,"moderate":0,"major":0},{"year":1988,"minor":0,"moderate":0,"major":0},{"year":1989,"minor":1,"moderate":0,"major":0},{"year":1990,"minor":1,"moderate":0,"major":0},{"year":1991,"minor":1,"moderate":1,"major":0},{"year":1992,"minor":5,"moderate":1,"major":0},{"year":1993,"minor":1,"moderate":0,"major":0},{"year":1994,"minor":2,"moderate":0,"major":0},{"year":1995,"minor":1,"moderate":0,"major":0},{"year":1996,"minor":3,"moderate":0,"major":0},{"year":1997,"minor":1,"moderate":0,"major":0},{"year":1998,"minor":2,"moderate":0,"major":0},{"year":1999,"minor":1,"moderate":0,"major":0},{"year":2000,"minor":0,"moderate":0,"major":0},{"year":2001,"minor":0,"moderate":0,"major":0},{"year":2002,"minor":1,"moderate":0,"major":0},{"year":2003,"minor":4,"moderate":0,"major":0},{"year":2004,"minor":0,"moderate":0,"major":0},{"year":2005,"minor":1,"moderate":0,"major":0},{"year":2006,"minor":3,"moderate":0,"major":0},{"year":2007,"minor":3,"moderate":0,"major":0},{"year":2008,"minor":5,"moderate":0,"major":0},{"year":2009,"minor":6,"moderate":0,"major":0},{"year":2010,"minor":3,"moderate":1,"major":0},{"year":2011,"minor":8,"moderate":1,"major":0},{"year":2012,"minor":5,"moderate":1,"major":1},{"year":2013,"minor":2,"moderate":0,"major":0},{"year":2014,"minor":3,"moderate":0,"major":0},{"year":2015,"minor":2,"moderate":0,"major":0},{"year":2016,"minor":9,"moderate":0,"major":0},{"year":2017,"minor":6,"moderate":0,"major":0},{"year":2018,"minor":15,"moderate":0,"major":0},{"year":2019,"minor":6,"moderate":0,"major":0},{"year":2020,"minor":4,"moderate":0,"major":0},{"year":2021,"minor":4,"moderate":0,"major":0},{"year":2022,"minor":3,"moderate":1,"major":0},{"year":2023,"minor":5,"moderate":0,"major":0},{"year":2024,"minor":9,"moderate":1,"major":0},{"year":2025,"minor":4,"moderate":0,"major":0}];
 const FUTURE_FLOOD_PREDICTIONS = {"Baseline":[],"Low":[],"Intermediate":[],"High":[]};
@@ -7616,7 +7948,7 @@ setInterval(async ()=>{
     document.querySelectorAll(".shorelyHelpPopover").forEach(el => el.remove());
   }
 
-  function openHelp(title, body){
+  function openHelp(title, body, anchor){
     closeHelp();
     const pop = document.createElement("div");
     pop.className = "shorelyHelpPopover";
@@ -7627,6 +7959,21 @@ setInterval(async ()=>{
     pop.querySelector(".shorelyHelpBody").textContent = body;
     pop.querySelector(".shorelyHelpClose").addEventListener("click", closeHelp);
     document.body.appendChild(pop);
+
+    const rect = anchor?.getBoundingClientRect?.();
+    if(rect){
+      const gap = 8;
+      const margin = 12;
+      const width = pop.offsetWidth || Math.min(340, window.innerWidth - margin * 2);
+      const height = pop.offsetHeight || 180;
+      const left = Math.min(Math.max(rect.left, margin), Math.max(margin, window.innerWidth - width - margin));
+      let top = rect.bottom + gap;
+      if(top + height > window.innerHeight - margin){
+        top = Math.max(margin, window.innerHeight - height - margin);
+      }
+      pop.style.left = left + "px";
+      pop.style.top = top + "px";
+    }
   }
 
   function addHelp(host, title, body){
@@ -7641,7 +7988,7 @@ setInterval(async ()=>{
     btn.addEventListener("click", event => {
       event.preventDefault();
       event.stopPropagation();
-      openHelp(title, body);
+      openHelp(title, body, btn);
     });
     host.insertBefore(btn, host.firstChild);
   }
