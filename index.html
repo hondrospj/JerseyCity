@@ -20,6 +20,7 @@
   --muted:#a9b6d3;
   --line:rgba(255,255,255,.085);
   --ok:#2dd4bf;
+  --nearFlood:#fde047;
   --minor:#fbbf24;
   --moderate:#fb7185;
   --major:#a78bfa;
@@ -235,6 +236,7 @@ option{
   background:rgba(255,255,255,.08);
 }
 
+.segBtn.isActive[data-val="nearFlood"]{ box-shadow: inset 0 -2px 0 rgba(253,224,71,.78); }
 .segBtn.isActive[data-val="minor"]{ box-shadow: inset 0 -2px 0 rgba(251,191,36,.75); }
 .segBtn.isActive[data-val="moderate"]{ box-shadow: inset 0 -2px 0 rgba(251,113,133,.75); }
 .segBtn.isActive[data-val="major"]{ box-shadow: inset 0 -2px 0 rgba(167,139,250,.75); }
@@ -271,38 +273,54 @@ option{
 #monthAvgTable.show-total th:nth-child(4),
 #monthAvgTable.show-total td:nth-child(4),
 #monthAvgTable.show-total th:nth-child(5),
-#monthAvgTable.show-total td:nth-child(5){
-  display: none;
+#monthAvgTable.show-total td:nth-child(5),
+#monthAvgTable.show-total th:nth-child(6),
+#monthAvgTable.show-total td:nth-child(6){
+  display:none;
 }
 
+#monthAvgTable.show-nearFlood th:nth-child(2),
+#monthAvgTable.show-nearFlood td:nth-child(2),
+#monthAvgTable.show-nearFlood th:nth-child(4),
+#monthAvgTable.show-nearFlood td:nth-child(4),
+#monthAvgTable.show-nearFlood th:nth-child(5),
+#monthAvgTable.show-nearFlood td:nth-child(5),
+#monthAvgTable.show-nearFlood th:nth-child(6),
+#monthAvgTable.show-nearFlood td:nth-child(6){
+  display:none;
+}
 
 #monthAvgTable.show-minor th:nth-child(2),
 #monthAvgTable.show-minor td:nth-child(2),
-#monthAvgTable.show-minor th:nth-child(4),
-#monthAvgTable.show-minor td:nth-child(4),
+#monthAvgTable.show-minor th:nth-child(3),
+#monthAvgTable.show-minor td:nth-child(3),
 #monthAvgTable.show-minor th:nth-child(5),
-#monthAvgTable.show-minor td:nth-child(5){
-  display: none;
+#monthAvgTable.show-minor td:nth-child(5),
+#monthAvgTable.show-minor th:nth-child(6),
+#monthAvgTable.show-minor td:nth-child(6){
+  display:none;
 }
-
 
 #monthAvgTable.show-moderate th:nth-child(2),
 #monthAvgTable.show-moderate td:nth-child(2),
 #monthAvgTable.show-moderate th:nth-child(3),
 #monthAvgTable.show-moderate td:nth-child(3),
-#monthAvgTable.show-moderate th:nth-child(5),
-#monthAvgTable.show-moderate td:nth-child(5){
-  display: none;
+#monthAvgTable.show-moderate th:nth-child(4),
+#monthAvgTable.show-moderate td:nth-child(4),
+#monthAvgTable.show-moderate th:nth-child(6),
+#monthAvgTable.show-moderate td:nth-child(6){
+  display:none;
 }
-
 
 #monthAvgTable.show-major th:nth-child(2),
 #monthAvgTable.show-major td:nth-child(2),
 #monthAvgTable.show-major th:nth-child(3),
 #monthAvgTable.show-major td:nth-child(3),
 #monthAvgTable.show-major th:nth-child(4),
-#monthAvgTable.show-major td:nth-child(4){
-  display: none;
+#monthAvgTable.show-major td:nth-child(4),
+#monthAvgTable.show-major th:nth-child(5),
+#monthAvgTable.show-major td:nth-child(5){
+  display:none;
 }
 
 
@@ -522,6 +540,7 @@ option{
     }
 
 .curVal.isBelow    #curFt { color: var(--text); }      
+.curVal.isNearFlood #curFt { color: var(--nearFlood); }
 .curVal.isMinor    #curFt { color: var(--minor); }     
 .curVal.isModerate #curFt { color: var(--moderate); }  
 .curVal.isMajor    #curFt { color: var(--major); }     
@@ -750,6 +769,7 @@ thead th{
   margin-left:6px;
   letter-spacing:.1px;
 }
+.thNearFlood{ color: var(--nearFlood); }
 .thMinor{ color: var(--minor); }
 .thModer{ color: var(--moderate); }
 .thMajor{ color: var(--major); }
@@ -2256,7 +2276,11 @@ a.brand *{
       <div class="panel">
         <div class="panelTitle">Flood outlook (Next 72 Hours)</div>
 
-        <div class="outlookTop" aria-label="Total flood hours by type">
+        <div class="outlookTop" aria-label="Total near-flood and flood hours by type">
+          <div class="miniStat">
+            <span class="miniChip" style="background:var(--nearFlood)"></span>
+            Near-Flood <b id="f48NearFloodHrs">—</b> hrs
+          </div>
           <div class="miniStat">
             <span class="miniChip" style="background:var(--minor)"></span>
             Minor <b id="f48MinorHrs">—</b> hrs
@@ -2286,6 +2310,10 @@ a.brand *{
     </div>
 
     <div class="stages" aria-label="Flood stages">
+      <div class="stage">
+        <div class="stageName">Near-Flood</div>
+        <div class="badge" id="nearFloodBadge" style="color:var(--nearFlood)">Within 0.5 ft below minor flooding</div>
+      </div>
       <div class="stage">
         <div class="stageName">Minor</div>
         <div class="badge" id="minorBadge" style="color:var(--minor)">7.20–8.20 ft</div>
@@ -2323,6 +2351,12 @@ a.brand *{
     </div>
 
     <div class="foot" id="threshKey" style="font-size:18px;">
+      <span class="tag" style="padding:10px 16px;">
+        <span class="chip" style="background:var(--nearFlood); width:14px; height:14px;"></span>
+        Near-Flood
+        <span class="thNum thNearFlood" id="thNearFloodTxt">—</span>
+      </span>
+
       <span class="tag" style="padding:10px 16px;">
         <span class="chip" style="background:var(--minor); width:14px; height:14px;"></span>
         Minor
@@ -2416,6 +2450,7 @@ a.brand *{
       <div class="filterRow paneControlHeader annualHeaderControls">
         <div class="seg" id="annualViewSeg" aria-label="Annual floods view">
           <button class="segBtn isActive" type="button" data-val="total">Total</button>
+          <button class="segBtn" type="button" data-val="nearFlood">Near-Flood</button>
           <button class="segBtn" type="button" data-val="minor">Minor</button>
           <button class="segBtn" type="button" data-val="moderate">Moderate</button>
           <button class="segBtn" type="button" data-val="major">Major</button>
@@ -2479,6 +2514,7 @@ a.brand *{
       <div class="filterRow" style="margin-bottom:8px;">
         <div class="seg" id="monthViewSeg" aria-label="Monthly floods view">
           <button class="segBtn isActive" type="button" data-val="total">Total</button>
+          <button class="segBtn" type="button" data-val="nearFlood">Near-Flood</button>
           <button class="segBtn" type="button" data-val="minor">Minor</button>
           <button class="segBtn" type="button" data-val="moderate">Moderate</button>
           <button class="segBtn" type="button" data-val="major">Major</button>
@@ -2495,7 +2531,8 @@ a.brand *{
     <thead>
       <tr>
         <th>Month</th>
-        <th>Average Total Number of Floods</th>
+        <th>Average Total Events</th>
+        <th>Average Near-Flood</th>
         <th>Average Minor</th>
         <th>Average Moderate</th>
         <th>Average Major</th>
@@ -2619,6 +2656,7 @@ function fromDisplayToNavd(displayFt){
 
 
       const HOUR_MS = 60 * 60 * 1000;
+const NEAR_FLOOD_WINDOW_FT = 0.5;
 
 function floorToHourMs(tMs){
   return Math.floor(tMs / HOUR_MS) * HOUR_MS;
@@ -2747,7 +2785,8 @@ const lastPill=$("lastPill");
 const alertBanner=$("alertBanner"), alertTitle=$("alertTitle"), alertBody=$("alertBody");
 
 
-    const thMinorTxt = $("thMinorTxt");
+    const thNearFloodTxt = $("thNearFloodTxt");
+const thMinorTxt = $("thMinorTxt");
 const thModerTxt = $("thModerTxt");
 const thMajorTxt = $("thMajorTxt");
 
@@ -2763,12 +2802,14 @@ const minElevEl  = $("minElev"),
       sortModeEl = $("sortMode"),
       histLimitEl = $("histLimit");
 
-const minorBadge = $("minorBadge"),
+const nearFloodBadge = $("nearFloodBadge"),
+      minorBadge = $("minorBadge"),
       moderateBadge = $("moderateBadge"),
       majorBadge = $("majorBadge");
 
 
       
+const f48NearFloodHrsEl = $("f48NearFloodHrs");
 const f48MinorHrsEl = $("f48MinorHrs");
 const f48ModerHrsEl = $("f48ModerHrs");
 const f48MajorHrsEl = $("f48MajorHrs");
@@ -2870,7 +2911,7 @@ function applyMonthView(){
   
   const tbl = document.getElementById("monthAvgTable");
   if(tbl){
-    tbl.classList.remove("show-minor","show-moderate","show-major","show-total");
+    tbl.classList.remove("show-nearFlood","show-minor","show-moderate","show-major","show-total");
     tbl.classList.add(`show-${MONTH_VIEW}`);
   }
 
@@ -2879,9 +2920,10 @@ function applyMonthView(){
   
   const showAll = (MONTH_VIEW === "total");
 
-  monthAvgChart.data.datasets[0].hidden = !showAll && (MONTH_VIEW !== "minor");
-  monthAvgChart.data.datasets[1].hidden = !showAll && (MONTH_VIEW !== "moderate");
-  monthAvgChart.data.datasets[2].hidden = !showAll && (MONTH_VIEW !== "major");
+  monthAvgChart.data.datasets[0].hidden = !showAll && (MONTH_VIEW !== "nearFlood");
+  monthAvgChart.data.datasets[1].hidden = !showAll && (MONTH_VIEW !== "minor");
+  monthAvgChart.data.datasets[2].hidden = !showAll && (MONTH_VIEW !== "moderate");
+  monthAvgChart.data.datasets[3].hidden = !showAll && (MONTH_VIEW !== "major");
 
   monthAvgChart.update();
 }
@@ -2892,9 +2934,10 @@ function applyAnnualView(){
 
   const showAll = (ANNUAL_VIEW === "total");
 
-  annualChart.data.datasets[0].hidden = !showAll && (ANNUAL_VIEW !== "minor");
-  annualChart.data.datasets[1].hidden = !showAll && (ANNUAL_VIEW !== "moderate");
-  annualChart.data.datasets[2].hidden = !showAll && (ANNUAL_VIEW !== "major");
+  annualChart.data.datasets[0].hidden = !showAll && (ANNUAL_VIEW !== "nearFlood");
+  annualChart.data.datasets[1].hidden = !showAll && (ANNUAL_VIEW !== "minor");
+  annualChart.data.datasets[2].hidden = !showAll && (ANNUAL_VIEW !== "moderate");
+  annualChart.data.datasets[3].hidden = !showAll && (ANNUAL_VIEW !== "major");
 
   annualChart.update();
 }
@@ -3098,9 +3141,11 @@ function fetchWithTimeout(resource, options={}, timeoutMs=8000){
 
 function classifyByNavd(navdFt){
   const T = THRESH.NAVD88;
+  const nearLow = T.minorLow - NEAR_FLOOD_WINDOW_FT;
   if(navdFt>=T.majorLow) return {label:"MAJOR FLOODING", color:"var(--major)", glow:"rgba(167,139,250,.22)", short:"Major"};
   if(navdFt>=T.moderateLow) return {label:"MODERATE FLOODING", color:"var(--moderate)", glow:"rgba(251,113,133,.22)", short:"Moderate"};
   if(navdFt>=T.minorLow) return {label:"MINOR FLOODING", color:"var(--minor)", glow:"rgba(251,191,36,.22)", short:"Minor"};
+  if(navdFt>=nearLow) return {label:"NEAR-FLOOD", color:"var(--nearFlood)", glow:"rgba(253,224,71,.22)", short:"Near-Flood"};
   return {label:"NO FLOODING", color:"var(--ok)", glow:"rgba(45,212,191,.18)", short:"Below"};
 }
 function stageTagByNavd(navdFt){
@@ -3118,12 +3163,13 @@ function setStage(navdFt){
   if(!wrap) return;
 
   
-  wrap.classList.remove("isBelow","isMinor","isModerate","isMajor");
+  wrap.classList.remove("isBelow","isNearFlood","isMinor","isModerate","isMajor");
 
   const c = classifyByNavd(navdFt); 
   if(c.short === "Major") wrap.classList.add("isMajor");
   else if(c.short === "Moderate") wrap.classList.add("isModerate");
   else if(c.short === "Minor") wrap.classList.add("isMinor");
+  else if(c.short === "Near-Flood") wrap.classList.add("isNearFlood");
   else wrap.classList.add("isBelow");
 }
 
@@ -3152,12 +3198,14 @@ function updateUnitsAndBadges(){
 
   
   const T = THRESH[DISPLAY_DATUM];
+if(nearFloodBadge) nearFloodBadge.textContent = `${(T.minorLow - NEAR_FLOOD_WINDOW_FT).toFixed(2)}–${T.minorLow.toFixed(2)} ft, within 0.5 ft below minor flooding`;
 minorBadge.textContent    = `${T.minorLow.toFixed(2)}–${T.moderateLow.toFixed(2)} ft`;
 moderateBadge.textContent = `${T.moderateLow.toFixed(2)}–${T.majorLow.toFixed(2)} ft`;
 majorBadge.textContent    = `≥ ${T.majorLow.toFixed(2)} ft`;
 
 
   
+  if(thNearFloodTxt) thNearFloodTxt.textContent = `${(T.minorLow - NEAR_FLOOD_WINDOW_FT).toFixed(2)}-${T.minorLow.toFixed(2)} ${unitText()}`;
   if(thMinorTxt) thMinorTxt.textContent = `${T.minorLow.toFixed(2)} ${unitText()}`;
   if(thModerTxt) thModerTxt.textContent = `${T.moderateLow.toFixed(2)} ${unitText()}`;
   if(thMajorTxt) thMajorTxt.textContent = `${T.majorLow.toFixed(2)} ${unitText()}`;
@@ -3169,7 +3217,7 @@ function maxPoint(arr){ return arr.reduce((a,b)=>b.ft>a.ft?b:a, arr[0]); }
 function minPoint(arr){ return arr.reduce((a,b)=>b.ft<a.ft?b:a, arr[0]); }
       function thresholdsDisplay(){
   const T = THRESH[DISPLAY_DATUM];
-  return { minor:T.minorLow, moderate:T.moderateLow, major:T.majorLow };
+  return { nearFlood:T.minorLow - NEAR_FLOOD_WINDOW_FT, minor:T.minorLow, moderate:T.moderateLow, major:T.majorLow };
 }
 
       
@@ -3185,9 +3233,11 @@ function minPoint(arr){ return arr.reduce((a,b)=>b.ft<a.ft?b:a, arr[0]); }
 
 function stageNameFromDisplayFt(ft){
   const T = THRESH[DISPLAY_DATUM];
+  const nearLow = T.minorLow - NEAR_FLOOD_WINDOW_FT;
   if(ft >= T.majorLow) return "Major";
   if(ft >= T.moderateLow) return "Moderate";
   if(ft >= T.minorLow) return "Minor";
+  if(ft >= nearLow) return "Near-Flood";
   return "Below";
 }
 
@@ -3195,6 +3245,7 @@ function stageColorVar(stage){
   if(stage==="Major") return "var(--major)";
   if(stage==="Moderate") return "var(--moderate)";
   if(stage==="Minor") return "var(--minor)";
+  if(stage==="Near-Flood") return "var(--nearFlood)";
   return "var(--muted)";
 }
 
@@ -3210,15 +3261,16 @@ function isoFromMs(ms){
 }
 
 function stageRank(stage){
-  if(stage === "Major") return 3;
-  if(stage === "Moderate") return 2;
-  if(stage === "Minor") return 1;
+  if(stage === "Major") return 4;
+  if(stage === "Moderate") return 3;
+  if(stage === "Minor") return 2;
+  if(stage === "Near-Flood") return 1;
   return 0;
 }
 
 function splitIntervalByFloodThresholds(tA, tB, ftA, ftB){
   const T = THRESH[DISPLAY_DATUM];
-  const thresholds = [T.minorLow, T.moderateLow, T.majorLow];
+  const thresholds = [T.minorLow - NEAR_FLOOD_WINDOW_FT, T.minorLow, T.moderateLow, T.majorLow];
   const cuts = [tA, tB];
 
   for(const th of thresholds){
@@ -3259,6 +3311,7 @@ function splitIntervalByFloodThresholds(tA, tB, ftA, ftB){
 
 function buildExactFloodAccounting(rawPoints, t0, t1){
   const out = {
+    nearFloodMs:0,
     minorMs:0,
     moderateMs:0,
     majorMs:0,
@@ -3292,6 +3345,7 @@ function buildExactFloodAccounting(rawPoints, t0, t1){
       if(piece.stage === "Major") out.majorMs += dur;
       else if(piece.stage === "Moderate") out.moderateMs += dur;
       else if(piece.stage === "Minor") out.minorMs += dur;
+      else if(piece.stage === "Near-Flood") out.nearFloodMs += dur;
 
       out.pieces.push(piece);
     }
@@ -3334,10 +3388,11 @@ function buildExactFloodAccounting(rawPoints, t0, t1){
 }
 
 function updateFloodOutlook48(){
-  if(!f48MinorHrsEl || !f48ModerHrsEl || !f48MajorHrsEl || !f48ListEl || !f48MetaEl) return;
+  if(!f48NearFloodHrsEl || !f48MinorHrsEl || !f48ModerHrsEl || !f48MajorHrsEl || !f48ListEl || !f48MetaEl) return;
 
   const pred = STATE.pred72Mllw || [];
   if(!pred.length){
+    f48NearFloodHrsEl.textContent = "—";
     f48MinorHrsEl.textContent = "—";
     f48ModerHrsEl.textContent = "—";
     f48MajorHrsEl.textContent = "—";
@@ -3370,6 +3425,7 @@ function updateFloodOutlook48(){
   const accounting = buildExactFloodAccounting(rawPts, t0, t1);
   const msToHours = ms => (ms / 3600000);
 
+  f48NearFloodHrsEl.textContent = msToHours(accounting.nearFloodMs).toFixed(1);
   f48MinorHrsEl.textContent = msToHours(accounting.minorMs).toFixed(1);
   f48ModerHrsEl.textContent = msToHours(accounting.moderateMs).toFixed(1);
   f48MajorHrsEl.textContent = msToHours(accounting.majorMs).toFixed(1);
@@ -3380,8 +3436,8 @@ function updateFloodOutlook48(){
     f48ListEl.innerHTML = `
       <div class="event">
         <div class="eventLeft">
-          <div class="eventWhen">No flood periods forecast</div>
-          <div class="eventSub">Next 72 hours stay flooding free</div>
+          <div class="eventWhen">No near-flood or flood periods forecast</div>
+          <div class="eventSub">Next 72 hours stay below the near-flood threshold</div>
         </div>
         <div class="eventBadge" style="color:var(--ok)">Below</div>
       </div>`;
@@ -3970,15 +4026,19 @@ const floodBandsPlugin = {
     const left = chartArea.left, right = chartArea.right;
 
     const T = THRESH[DISPLAY_DATUM];
+    const yNear = y.getPixelForValue(T.minorLow - NEAR_FLOOD_WINDOW_FT);
     const yMinor = y.getPixelForValue(T.minorLow);
     const yModer = y.getPixelForValue(T.moderateLow);
     const yMajor = y.getPixelForValue(T.majorLow);
 
-    if (![yMinor, yModer, yMajor].every(Number.isFinite)) return;
+    if (![yNear, yMinor, yModer, yMajor].every(Number.isFinite)) return;
 
     ctx.save();
 
 
+
+ctx.fillStyle = "rgba(253,224,71,.12)";
+ctx.fillRect(left, yMinor, right - left, yNear - yMinor);
 
 ctx.fillStyle = "rgba(251,191,36,.14)";
 ctx.fillRect(left, yModer, right - left, yMinor - yModer);
@@ -4008,6 +4068,7 @@ const tsFloodLineOverlayPlugin = {
     const T = THRESH[DISPLAY_DATUM];
     if (!T) return;
     const bands = [
+      { color:"rgba(253,224,71,.95)", top:y.getPixelForValue(T.minorLow), bottom:y.getPixelForValue(T.minorLow - NEAR_FLOOD_WINDOW_FT) },
       { color:"rgba(251,191,36,.95)", top:y.getPixelForValue(T.moderateLow), bottom:y.getPixelForValue(T.minorLow) },
       { color:"rgba(251,113,133,.95)", top:y.getPixelForValue(T.majorLow), bottom:y.getPixelForValue(T.moderateLow) },
       { color:"rgba(167,139,250,.95)", top:chartArea.top, bottom:y.getPixelForValue(T.majorLow) }
@@ -4517,7 +4578,7 @@ function attachChartZoom(chart){
 
 let HIGH_TIDES_NAVD=[];
 let annualChart=null, tsChart=null, monthAvgChart=null;
-let YEARS=[], annualMinor=[], annualModerate=[], annualMajor=[];
+let YEARS=[], annualNearFlood=[], annualMinor=[], annualModerate=[], annualMajor=[];
 
 const STATE = { lastNavd:null, todayNavd:null, obs24Navd:null, pred72Mllw:null };
 
@@ -4531,6 +4592,7 @@ function colorForFtDisplay(ftDisplay){
   if(ftDisplay>=T.majorLow) return "rgba(167,139,250,.95)";
   if(ftDisplay>=T.moderateLow) return "rgba(251,113,133,.95)";
   if(ftDisplay>=T.minorLow) return "rgba(251,191,36,.95)";
+  if(ftDisplay>=T.minorLow - NEAR_FLOOD_WINDOW_FT) return "rgba(253,224,71,.95)";
   return "rgba(45,212,191,.90)";
 }
 
@@ -4689,7 +4751,8 @@ function annualYearFromEvent(e){
 
 function countEventsFromListForYear(events, year){
   const T = THRESH.NAVD88;
-  const out = { minor: 0, moderate: 0, major: 0 };
+  const nearLow = T.minorLow - NEAR_FLOOD_WINDOW_FT;
+  const out = { nearFlood: 0, minor: 0, moderate: 0, major: 0 };
 
   for(const e of (events || [])){
     const y = annualYearFromEvent(e);
@@ -4701,6 +4764,7 @@ function countEventsFromListForYear(events, year){
     if(ft >= T.majorLow) out.major++;
     else if(ft >= T.moderateLow) out.moderate++;
     else if(ft >= T.minorLow) out.minor++;
+    else if(ft >= nearLow) out.nearFlood++;
   }
 
   return out;
@@ -4712,7 +4776,7 @@ function buildStationAnnualCountsMap(){
   for(const e of (HIGH_TIDES_NAVD || [])){
     const y = annualYearFromEvent(e);
     if(!Number.isFinite(y)) continue;
-    if(!out.has(y)) out.set(y, { minor:0, moderate:0, major:0 });
+    if(!out.has(y)) out.set(y, { nearFlood:0, minor:0, moderate:0, major:0 });
   }
 
   for(const y of out.keys()){
@@ -4825,6 +4889,7 @@ function buildAnnualArrays(){
       Number(r.year),
       {
         year:Number(r.year),
+        nearFlood:annualNumber(r.nearFlood),
         minor:annualNumber(r.minor),
         moderate:annualNumber(r.moderate),
         major:annualNumber(r.major),
@@ -4852,6 +4917,7 @@ function buildAnnualArrays(){
         const counts = stoneByYear.get(year) || { minor:0, moderate:0, major:0 };
         return {
           year,
+          nearFlood:annualNumber(counts.nearFlood),
           minor:annualNumber(counts.minor),
           moderate:annualNumber(counts.moderate),
           major:annualNumber(counts.major),
@@ -4864,6 +4930,7 @@ function buildAnnualArrays(){
 
       return {
         year,
+        nearFlood:0,
         minor:0,
         moderate:0,
         major:0,
@@ -4882,6 +4949,7 @@ function buildAnnualArrays(){
         annualPredictionLookup.set(r.year, r);
         return {
           year:r.year,
+          nearFlood:annualNumber(r.nearFloodMean),
           minor:annualNumber(r.minorMean),
           moderate:annualNumber(r.moderateMean),
           major:annualNumber(r.majorMean),
@@ -4892,6 +4960,7 @@ function buildAnnualArrays(){
 
   rows.sort((a,b)=>a.year-b.year);
   YEARS = rows.map(r=>r.year);
+  annualNearFlood = rows.map(r=>r.nearFlood);
   annualMinor = rows.map(r=>r.minor);
   annualModerate = rows.map(r=>r.moderate);
   annualMajor = rows.map(r=>r.major);
@@ -4900,6 +4969,7 @@ function buildAnnualArrays(){
 
 function annualColors(kind){
   const base = {
+    nearFlood:"253,224,71",
     minor:"251,191,36",
     moderate:"251,113,133",
     major:"167,139,250"
@@ -4915,6 +4985,7 @@ function annualColors(kind){
 function annualPredictionRange(year, label){
   const rec = annualPredictionLookup.get(Number(year));
   if(!rec) return "";
+  if(label === "Near-Flood") return rec.nearFloodSpread || rec.nearFloodRange || "";
   if(label === "Minor") return rec.minorSpread || rec.minorRange || "";
   if(label === "Moderate") return rec.moderateSpread || rec.moderateRange || "";
   if(label === "Major") return rec.majorSpread || rec.majorRange || "";
@@ -4924,7 +4995,7 @@ function annualPredictionRange(year, label){
 function annualPredictionBounds(year, label, value){
   const rec = annualPredictionLookup.get(Number(year));
   if(!rec) return null;
-  const prefix = label === "Minor" ? "minor" : label === "Moderate" ? "moderate" : label === "Major" ? "major" : "";
+  const prefix = label === "Near-Flood" ? "nearFlood" : label === "Minor" ? "minor" : label === "Moderate" ? "moderate" : label === "Major" ? "major" : "";
   const center = Number(value);
   if(prefix && Number.isFinite(center)){
     const minus = Number(rec[`${prefix}Minus`]);
@@ -4952,6 +5023,13 @@ function ensureAnnual(){
     data: {
       labels: YEARS,
       datasets: [
+        {
+          label: "Near-Flood",
+          data: annualNearFlood,
+          stack: "f",
+          borderWidth: 0,
+          backgroundColor: annualColors("nearFlood")
+        },
         {
           label: "Minor",
           data: annualMinor,
@@ -5005,8 +5083,8 @@ function ensureAnnual(){
               const value = Math.floor(v);
               const bounds = annualPredictionBounds(year, ctx.dataset.label, value);
               return bounds
-                ? `${ctx.dataset.label}: ${value} floods (${bounds.low} - ${bounds.high} floods)`
-                : `${ctx.dataset.label}: ${value} floods`;
+                ? `${ctx.dataset.label}: ${value} events (${bounds.low} - ${bounds.high} events)`
+                : `${ctx.dataset.label}: ${value} events`;
             },
          footer: (items) => {
   const total = (items || [])
@@ -5015,7 +5093,7 @@ function ensureAnnual(){
       return sum + (Number.isFinite(v) ? v : 0);
     }, 0);
 
-  return `Total: ${Math.floor(total)} floods`;
+  return `Total: ${Math.floor(total)} events`;
 }
 
           }
@@ -5036,7 +5114,7 @@ function ensureAnnual(){
         },
         y: {
           stacked: true,
-          title:{display:true, text:"Floods", color:"rgba(169,182,211,.9)", font:{weight:"900"}},
+          title:{display:true, text:"Events", color:"rgba(169,182,211,.9)", font:{weight:"900"}},
           ticks: { color: "rgba(169,182,211,.9)", precision: 0 },
           grid: { color: "rgba(255,255,255,.06)" }
         },
@@ -5053,12 +5131,14 @@ function renderAnnual(){
   ensureAnnual();
 
   annualChart.data.labels = YEARS;
-  annualChart.data.datasets[0].data = annualMinor;
-  annualChart.data.datasets[1].data = annualModerate;
-  annualChart.data.datasets[2].data = annualMajor;
-  annualChart.data.datasets[0].backgroundColor = annualColors("minor");
-  annualChart.data.datasets[1].backgroundColor = annualColors("moderate");
-  annualChart.data.datasets[2].backgroundColor = annualColors("major");
+  annualChart.data.datasets[0].data = annualNearFlood;
+  annualChart.data.datasets[1].data = annualMinor;
+  annualChart.data.datasets[2].data = annualModerate;
+  annualChart.data.datasets[3].data = annualMajor;
+  annualChart.data.datasets[0].backgroundColor = annualColors("nearFlood");
+  annualChart.data.datasets[1].backgroundColor = annualColors("minor");
+  annualChart.data.datasets[2].backgroundColor = annualColors("moderate");
+  annualChart.data.datasets[3].backgroundColor = annualColors("major");
 
   annualChart.update();
   applyAnnualView();
@@ -5627,7 +5707,7 @@ function formatForecastPlusMinus(ds){
   return `${year} Forecast: ${mean} floods`;
 }
 
-const TS_NEAR_FLOOD_WINDOW_FT = 0.5;
+const TS_NEAR_FLOOD_WINDOW_FT = NEAR_FLOOD_WINDOW_FT;
 
 function tsObservedDataset(data, {cachedHighs=false}={}){
   return {
@@ -5721,7 +5801,7 @@ function updateTsAnnualForecastChartFromState(){
   const rows = buildSeasonallyAdjustedHighRows();
   const labels = rows.map(p=>p.t);
   const minorMllw = datumToDatum(thresholdsDisplay().minor, DISPLAY_DATUM, "MLLW");
-  const nearFlags = rows.map(p => p.adjMllw >= minorMllw - TS_NEAR_FLOOD_WINDOW_FT);
+  const nearFlags = rows.map(p => p.adjMllw >= minorMllw - TS_NEAR_FLOOD_WINDOW_FT && p.adjMllw < minorMllw);
 
   const adjustedHighs = rows.map(p=>p.adjFt);
   const nearFloodData = rows.map((p,i)=> nearFlags[i] ? p.adjFt : null);
@@ -5760,9 +5840,9 @@ function updateTsAnnualForecastChartFromState(){
       _seasonalOffsetFt:seasonalOffsetFt,
       showLine:false,
       borderWidth:0,
-      borderColor:"rgba(239,68,68,1)",
-      backgroundColor:"rgba(239,68,68,1)",
-      pointBackgroundColor:"rgba(239,68,68,1)",
+      borderColor:"rgba(253,224,71,1)",
+      backgroundColor:"rgba(253,224,71,1)",
+      pointBackgroundColor:"rgba(253,224,71,1)",
       pointBorderColor:"rgba(255,255,255,.96)",
       pointBorderWidth:1.8,
       pointRadius:5.2,
@@ -7746,7 +7826,7 @@ function computeMonthlyAveragesFromEvents(eventsNavd){
 
     const key = `${y}-${m}`;
     if(!byYearMonth.has(key)){
-      byYearMonth.set(key,{year:y, month:m, total:0, minor:0, moderate:0, major:0});
+      byYearMonth.set(key,{year:y, month:m, total:0, nearFlood:0, minor:0, moderate:0, major:0});
     }
     const rec = byYearMonth.get(key);
 
@@ -7755,6 +7835,8 @@ function computeMonthlyAveragesFromEvents(eventsNavd){
       if(p.ft >= T.majorLow) rec.major++;
       else if(p.ft >= T.moderateLow) rec.moderate++;
       else rec.minor++;
+    }else if(p.ft >= T.minorLow - NEAR_FLOOD_WINDOW_FT){
+      rec.nearFlood++;
     }
   }
 
@@ -7765,20 +7847,22 @@ function computeMonthlyAveragesFromEvents(eventsNavd){
     const rowsForMonth=[];
     for(const y of years){
       const key = `${y}-${m}`;
-      rowsForMonth.push(byYearMonth.get(key) || {year:y, month:m, total:0, minor:0, moderate:0, major:0});
+      rowsForMonth.push(byYearMonth.get(key) || {year:y, month:m, total:0, nearFlood:0, minor:0, moderate:0, major:0});
     }
     const n = rowsForMonth.length || 1;
     const sum = rowsForMonth.reduce((acc,r)=>{
-      acc.total += r.total;
+      acc.total += r.total + r.nearFlood;
+      acc.nearFlood += r.nearFlood;
       acc.minor += r.minor;
       acc.moderate += r.moderate;
       acc.major += r.major;
       return acc;
-    },{total:0, minor:0, moderate:0, major:0});
+    },{total:0, nearFlood:0, minor:0, moderate:0, major:0});
 
     result.push({
       month:m,
       avgTotal: sum.total / n,
+      avgNearFlood: sum.nearFlood / n,
       avgMinor: sum.minor / n,
       avgModerate: sum.moderate / n,
       avgMajor: sum.major / n,
@@ -7795,6 +7879,7 @@ function renderMonthAveragesTable(monthStats){
     tr.innerHTML=`
       <td><b>${monthNameFromIndex(r.month)}</b></td>
       <td>${r.avgTotal.toFixed(2)}</td>
+      <td>${r.avgNearFlood.toFixed(2)}</td>
       <td>${r.avgMinor.toFixed(2)}</td>
       <td>${r.avgModerate.toFixed(2)}</td>
       <td>${r.avgMajor.toFixed(2)}</td>
@@ -7811,6 +7896,7 @@ function ensureMonthAvgChart(){
     data:{
       labels:[],
       datasets:[
+        {label:"Average Near-Flood", data:[], stack:"m", borderWidth:0, backgroundColor:"rgba(253,224,71,.86)"},
         {label:"Average Minor", data:[], stack:"m", borderWidth:0, backgroundColor:"rgba(251,191,36,.85)"},
         {label:"Average Moderate", data:[], stack:"m", borderWidth:0, backgroundColor:"rgba(251,113,133,.80)"},
         {label:"Average Major", data:[], stack:"m", borderWidth:0, backgroundColor:"rgba(167,139,250,.80)"}
@@ -7863,7 +7949,7 @@ function ensureMonthAvgChart(){
         
         y:{
           stacked:true,
-          title:{display:true, text:"Floods", color:"rgba(169,182,211,.9)", font:{weight:"900"}},
+          title:{display:true, text:"Events", color:"rgba(169,182,211,.9)", font:{weight:"900"}},
           ticks:{
             color:"rgba(169,182,211,.9)",
 
@@ -7883,9 +7969,10 @@ function ensureMonthAvgChart(){
 function renderMonthAveragesChart(monthStats){
   ensureMonthAvgChart();
   monthAvgChart.data.labels = monthStats.map(r=>monthNameFromIndex(r.month));
-  monthAvgChart.data.datasets[0].data = monthStats.map(r=>r.avgMinor);
-  monthAvgChart.data.datasets[1].data = monthStats.map(r=>r.avgModerate);
-  monthAvgChart.data.datasets[2].data = monthStats.map(r=>r.avgMajor);
+  monthAvgChart.data.datasets[0].data = monthStats.map(r=>r.avgNearFlood);
+  monthAvgChart.data.datasets[1].data = monthStats.map(r=>r.avgMinor);
+  monthAvgChart.data.datasets[2].data = monthStats.map(r=>r.avgModerate);
+  monthAvgChart.data.datasets[3].data = monthStats.map(r=>r.avgMajor);
   monthAvgChart.update();
   // Average monthly floods keeps its full-month view.
     applyMonthView();
@@ -7895,7 +7982,7 @@ function updateMonthAveragesFromHistory(){
   if(!HIGH_TIDES_NAVD.length){
     monthAvgMeta.textContent = "";
     const zeros = Array.from({length:12},(_,i)=>({
-      month:i+1, avgTotal:0, avgMinor:0, avgModerate:0, avgMajor:0, years:0
+      month:i+1, avgTotal:0, avgNearFlood:0, avgMinor:0, avgModerate:0, avgMajor:0, years:0
     }));
     renderMonthAveragesTable(zeros);
     renderMonthAveragesChart(zeros);
@@ -8508,7 +8595,7 @@ const GAUGES = [
   }
 ];
 const FUTURE_SCENARIOS = [{"id":"Baseline","label":"Baseline"},{"id":"Low","label":"Low"},{"id":"Intermediate","label":"Intermediate"},{"id":"High","label":"High"}];
-const ATLANTIC_CITY_ANNUAL_COUNTS = [{"year":1920,"minor":0,"moderate":0,"major":0},{"year":1921,"minor":0,"moderate":0,"major":0},{"year":1922,"minor":null,"moderate":null,"major":null},{"year":1923,"minor":null,"moderate":null,"major":null},{"year":1924,"minor":null,"moderate":null,"major":null},{"year":1925,"minor":null,"moderate":null,"major":null},{"year":1926,"minor":0,"moderate":0,"major":0},{"year":1927,"minor":1,"moderate":0,"major":0},{"year":1928,"minor":0,"moderate":0,"major":0},{"year":1929,"minor":0,"moderate":0,"major":0},{"year":1930,"minor":0,"moderate":0,"major":0},{"year":1931,"minor":1,"moderate":0,"major":0},{"year":1932,"minor":2,"moderate":0,"major":0},{"year":1933,"minor":1,"moderate":0,"major":0},{"year":1934,"minor":0,"moderate":0,"major":0},{"year":1935,"minor":1,"moderate":0,"major":0},{"year":1936,"minor":0,"moderate":0,"major":0},{"year":1937,"minor":0,"moderate":0,"major":0},{"year":1938,"minor":1,"moderate":0,"major":0},{"year":1939,"minor":0,"moderate":0,"major":0},{"year":1940,"minor":0,"moderate":0,"major":0},{"year":1941,"minor":0,"moderate":0,"major":0},{"year":1942,"minor":0,"moderate":0,"major":0},{"year":1943,"minor":1,"moderate":0,"major":0},{"year":1944,"minor":2,"moderate":0,"major":0},{"year":1945,"minor":0,"moderate":0,"major":0},{"year":1946,"minor":0,"moderate":0,"major":0},{"year":1947,"minor":0,"moderate":0,"major":0},{"year":1948,"minor":0,"moderate":0,"major":0},{"year":1949,"minor":0,"moderate":0,"major":0},{"year":1950,"minor":3,"moderate":1,"major":0},{"year":1951,"minor":0,"moderate":0,"major":0},{"year":1952,"minor":0,"moderate":0,"major":0},{"year":1953,"minor":1,"moderate":1,"major":0},{"year":1954,"minor":0,"moderate":0,"major":0},{"year":1955,"minor":2,"moderate":0,"major":0},{"year":1956,"minor":0,"moderate":0,"major":0},{"year":1957,"minor":0,"moderate":0,"major":0},{"year":1958,"minor":0,"moderate":0,"major":0},{"year":1959,"minor":2,"moderate":0,"major":0},{"year":1960,"minor":2,"moderate":0,"major":1},{"year":1961,"minor":3,"moderate":0,"major":0},{"year":1962,"minor":3,"moderate":3,"major":0},{"year":1963,"minor":0,"moderate":0,"major":0},{"year":1964,"minor":0,"moderate":0,"major":0},{"year":1965,"minor":0,"moderate":0,"major":0},{"year":1966,"minor":1,"moderate":0,"major":0},{"year":1967,"minor":0,"moderate":0,"major":0},{"year":1968,"minor":1,"moderate":0,"major":0},{"year":1969,"minor":1,"moderate":0,"major":0},{"year":1970,"minor":1,"moderate":0,"major":0},{"year":1971,"minor":0,"moderate":0,"major":0},{"year":1972,"minor":4,"moderate":0,"major":0},{"year":1973,"minor":0,"moderate":0,"major":0},{"year":1974,"minor":0,"moderate":0,"major":0},{"year":1975,"minor":0,"moderate":0,"major":0},{"year":1976,"minor":0,"moderate":0,"major":0},{"year":1977,"minor":4,"moderate":0,"major":0},{"year":1978,"minor":1,"moderate":0,"major":0},{"year":1979,"minor":3,"moderate":0,"major":0},{"year":1980,"minor":1,"moderate":0,"major":0},{"year":1981,"minor":0,"moderate":0,"major":0},{"year":1982,"minor":0,"moderate":0,"major":0},{"year":1983,"minor":0,"moderate":0,"major":0},{"year":1984,"minor":0,"moderate":1,"major":0},{"year":1985,"minor":1,"moderate":0,"major":0},{"year":1986,"minor":1,"moderate":0,"major":0},{"year":1987,"minor":1,"moderate":0,"major":0},{"year":1988,"minor":0,"moderate":0,"major":0},{"year":1989,"minor":1,"moderate":0,"major":0},{"year":1990,"minor":1,"moderate":0,"major":0},{"year":1991,"minor":1,"moderate":1,"major":0},{"year":1992,"minor":5,"moderate":1,"major":0},{"year":1993,"minor":1,"moderate":0,"major":0},{"year":1994,"minor":2,"moderate":0,"major":0},{"year":1995,"minor":1,"moderate":0,"major":0},{"year":1996,"minor":3,"moderate":0,"major":0},{"year":1997,"minor":1,"moderate":0,"major":0},{"year":1998,"minor":2,"moderate":0,"major":0},{"year":1999,"minor":1,"moderate":0,"major":0},{"year":2000,"minor":0,"moderate":0,"major":0},{"year":2001,"minor":0,"moderate":0,"major":0},{"year":2002,"minor":1,"moderate":0,"major":0},{"year":2003,"minor":4,"moderate":0,"major":0},{"year":2004,"minor":0,"moderate":0,"major":0},{"year":2005,"minor":1,"moderate":0,"major":0},{"year":2006,"minor":3,"moderate":0,"major":0},{"year":2007,"minor":3,"moderate":0,"major":0},{"year":2008,"minor":5,"moderate":0,"major":0},{"year":2009,"minor":6,"moderate":0,"major":0},{"year":2010,"minor":3,"moderate":1,"major":0},{"year":2011,"minor":8,"moderate":1,"major":0},{"year":2012,"minor":5,"moderate":1,"major":1},{"year":2013,"minor":2,"moderate":0,"major":0},{"year":2014,"minor":3,"moderate":0,"major":0},{"year":2015,"minor":2,"moderate":0,"major":0},{"year":2016,"minor":9,"moderate":0,"major":0},{"year":2017,"minor":6,"moderate":0,"major":0},{"year":2018,"minor":15,"moderate":0,"major":0},{"year":2019,"minor":6,"moderate":0,"major":0},{"year":2020,"minor":4,"moderate":0,"major":0},{"year":2021,"minor":4,"moderate":0,"major":0},{"year":2022,"minor":3,"moderate":1,"major":0},{"year":2023,"minor":5,"moderate":0,"major":0},{"year":2024,"minor":9,"moderate":1,"major":0},{"year":2025,"minor":4,"moderate":0,"major":0}];
+const ATLANTIC_CITY_ANNUAL_COUNTS = [{"year":1920,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1921,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1922,"minor":null,"moderate":null,"major":null,"nearFlood":null},{"year":1923,"minor":null,"moderate":null,"major":null,"nearFlood":null},{"year":1924,"minor":null,"moderate":null,"major":null,"nearFlood":null},{"year":1925,"minor":null,"moderate":null,"major":null,"nearFlood":null},{"year":1926,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1927,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1928,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1929,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1930,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1931,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1932,"minor":2,"moderate":0,"major":0,"nearFlood":null},{"year":1933,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1934,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1935,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1936,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1937,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1938,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1939,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1940,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1941,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1942,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1943,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1944,"minor":2,"moderate":0,"major":0,"nearFlood":null},{"year":1945,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1946,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1947,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1948,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1949,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1950,"minor":3,"moderate":1,"major":0,"nearFlood":null},{"year":1951,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1952,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1953,"minor":1,"moderate":1,"major":0,"nearFlood":null},{"year":1954,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1955,"minor":2,"moderate":0,"major":0,"nearFlood":null},{"year":1956,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1957,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1958,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1959,"minor":2,"moderate":0,"major":0,"nearFlood":null},{"year":1960,"minor":2,"moderate":0,"major":1,"nearFlood":null},{"year":1961,"minor":3,"moderate":0,"major":0,"nearFlood":null},{"year":1962,"minor":3,"moderate":3,"major":0,"nearFlood":null},{"year":1963,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1964,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1965,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1966,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1967,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1968,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1969,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1970,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1971,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1972,"minor":4,"moderate":0,"major":0,"nearFlood":null},{"year":1973,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1974,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1975,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1976,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1977,"minor":4,"moderate":0,"major":0,"nearFlood":null},{"year":1978,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1979,"minor":3,"moderate":0,"major":0,"nearFlood":null},{"year":1980,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1981,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1982,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1983,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1984,"minor":0,"moderate":1,"major":0,"nearFlood":null},{"year":1985,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1986,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1987,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1988,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":1989,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1990,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1991,"minor":1,"moderate":1,"major":0,"nearFlood":null},{"year":1992,"minor":5,"moderate":1,"major":0,"nearFlood":null},{"year":1993,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1994,"minor":2,"moderate":0,"major":0,"nearFlood":null},{"year":1995,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1996,"minor":3,"moderate":0,"major":0,"nearFlood":null},{"year":1997,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":1998,"minor":2,"moderate":0,"major":0,"nearFlood":null},{"year":1999,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":2000,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":2001,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":2002,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":2003,"minor":4,"moderate":0,"major":0,"nearFlood":null},{"year":2004,"minor":0,"moderate":0,"major":0,"nearFlood":null},{"year":2005,"minor":1,"moderate":0,"major":0,"nearFlood":null},{"year":2006,"minor":3,"moderate":0,"major":0,"nearFlood":null},{"year":2007,"minor":3,"moderate":0,"major":0,"nearFlood":null},{"year":2008,"minor":5,"moderate":0,"major":0,"nearFlood":null},{"year":2009,"minor":6,"moderate":0,"major":0,"nearFlood":null},{"year":2010,"minor":3,"moderate":1,"major":0,"nearFlood":null},{"year":2011,"minor":8,"moderate":1,"major":0,"nearFlood":null},{"year":2012,"minor":5,"moderate":1,"major":1,"nearFlood":null},{"year":2013,"minor":2,"moderate":0,"major":0,"nearFlood":null},{"year":2014,"minor":3,"moderate":0,"major":0,"nearFlood":null},{"year":2015,"minor":2,"moderate":0,"major":0,"nearFlood":null},{"year":2016,"minor":9,"moderate":0,"major":0,"nearFlood":null},{"year":2017,"minor":6,"moderate":0,"major":0,"nearFlood":null},{"year":2018,"minor":15,"moderate":0,"major":0,"nearFlood":null},{"year":2019,"minor":6,"moderate":0,"major":0,"nearFlood":null},{"year":2020,"minor":4,"moderate":0,"major":0,"nearFlood":null},{"year":2021,"minor":4,"moderate":0,"major":0,"nearFlood":null},{"year":2022,"minor":3,"moderate":1,"major":0,"nearFlood":null},{"year":2023,"minor":5,"moderate":0,"major":0,"nearFlood":null},{"year":2024,"minor":9,"moderate":1,"major":0,"nearFlood":null},{"year":2025,"minor":4,"moderate":0,"major":0,"nearFlood":null}];
 const FUTURE_FLOOD_PREDICTIONS = {"Baseline":[],"Low":[],"Intermediate":[],"High":[]};
 const SEA_LEVEL_RSLR_PROJECTIONS = {"sourceStation":"The Battery","originYear":2026,"rebaseYear":2026,"baseline":{"id":"Baseline","label":"Baseline","trendFtPerYear":0.01888744,"trendMethod":"deseasonalized_monthly_mean_linear_regression"},"observedTrendFtPerYear":0.018887,"scenarios":[{"id":"Baseline","label":"Baseline","formula":{"a":0.0,"b":0.018887439},"points":[{"year":2026,"ft":0.0},{"year":2027,"ft":0.0189},{"year":2028,"ft":0.0378},{"year":2029,"ft":0.0567},{"year":2030,"ft":0.0755},{"year":2031,"ft":0.0944},{"year":2032,"ft":0.1133},{"year":2033,"ft":0.1322},{"year":2034,"ft":0.1511},{"year":2035,"ft":0.17},{"year":2036,"ft":0.1889},{"year":2037,"ft":0.2078},{"year":2038,"ft":0.2266},{"year":2039,"ft":0.2455},{"year":2040,"ft":0.2644},{"year":2041,"ft":0.2833},{"year":2042,"ft":0.3022},{"year":2043,"ft":0.3211},{"year":2044,"ft":0.34},{"year":2045,"ft":0.3589},{"year":2046,"ft":0.3777},{"year":2047,"ft":0.3966},{"year":2048,"ft":0.4155},{"year":2049,"ft":0.4344},{"year":2050,"ft":0.4533},{"year":2051,"ft":0.4722},{"year":2052,"ft":0.4911},{"year":2053,"ft":0.51},{"year":2054,"ft":0.5288},{"year":2055,"ft":0.5477},{"year":2056,"ft":0.5666},{"year":2057,"ft":0.5855},{"year":2058,"ft":0.6044},{"year":2059,"ft":0.6233},{"year":2060,"ft":0.6422},{"year":2061,"ft":0.6611},{"year":2062,"ft":0.6799},{"year":2063,"ft":0.6988},{"year":2064,"ft":0.7177},{"year":2065,"ft":0.7366},{"year":2066,"ft":0.7555},{"year":2067,"ft":0.7744},{"year":2068,"ft":0.7933},{"year":2069,"ft":0.8122},{"year":2070,"ft":0.831},{"year":2071,"ft":0.8499},{"year":2072,"ft":0.8688},{"year":2073,"ft":0.8877},{"year":2074,"ft":0.9066},{"year":2075,"ft":0.9255},{"year":2076,"ft":0.9444},{"year":2077,"ft":0.9633},{"year":2078,"ft":0.9821},{"year":2079,"ft":1.001},{"year":2080,"ft":1.0199},{"year":2081,"ft":1.0388},{"year":2082,"ft":1.0577},{"year":2083,"ft":1.0766},{"year":2084,"ft":1.0955},{"year":2085,"ft":1.1144},{"year":2086,"ft":1.1332},{"year":2087,"ft":1.1521},{"year":2088,"ft":1.171},{"year":2089,"ft":1.1899},{"year":2090,"ft":1.2088},{"year":2091,"ft":1.2277},{"year":2092,"ft":1.2466},{"year":2093,"ft":1.2655},{"year":2094,"ft":1.2843},{"year":2095,"ft":1.3032},{"year":2096,"ft":1.3221},{"year":2097,"ft":1.341},{"year":2098,"ft":1.3599},{"year":2099,"ft":1.3788},{"year":2100,"ft":1.3977}]},{"id":"Low","label":"Low","formula":{"a":-5.20187e-05,"b":0.0215946162},"points":[{"year":2026,"ft":0.0},{"year":2027,"ft":0.0215},{"year":2028,"ft":0.043},{"year":2029,"ft":0.0643},{"year":2030,"ft":0.0855},{"year":2031,"ft":0.1067},{"year":2032,"ft":0.1277},{"year":2033,"ft":0.1486},{"year":2034,"ft":0.1694},{"year":2035,"ft":0.1901},{"year":2036,"ft":0.2107},{"year":2037,"ft":0.2312},{"year":2038,"ft":0.2516},{"year":2039,"ft":0.2719},{"year":2040,"ft":0.2921},{"year":2041,"ft":0.3122},{"year":2042,"ft":0.3322},{"year":2043,"ft":0.3521},{"year":2044,"ft":0.3718},{"year":2045,"ft":0.3915},{"year":2046,"ft":0.4111},{"year":2047,"ft":0.4305},{"year":2048,"ft":0.4499},{"year":2049,"ft":0.4692},{"year":2050,"ft":0.4883},{"year":2051,"ft":0.5074},{"year":2052,"ft":0.5263},{"year":2053,"ft":0.5451},{"year":2054,"ft":0.5639},{"year":2055,"ft":0.5825},{"year":2056,"ft":0.601},{"year":2057,"ft":0.6194},{"year":2058,"ft":0.6378},{"year":2059,"ft":0.656},{"year":2060,"ft":0.6741},{"year":2061,"ft":0.6921},{"year":2062,"ft":0.71},{"year":2063,"ft":0.7278},{"year":2064,"ft":0.7455},{"year":2065,"ft":0.7631},{"year":2066,"ft":0.7806},{"year":2067,"ft":0.7979},{"year":2068,"ft":0.8152},{"year":2069,"ft":0.8324},{"year":2070,"ft":0.8495},{"year":2071,"ft":0.8664},{"year":2072,"ft":0.8833},{"year":2073,"ft":0.9},{"year":2074,"ft":0.9167},{"year":2075,"ft":0.9332},{"year":2076,"ft":0.9497},{"year":2077,"ft":0.966},{"year":2078,"ft":0.9823},{"year":2079,"ft":0.9984},{"year":2080,"ft":1.0144},{"year":2081,"ft":1.0303},{"year":2082,"ft":1.0462},{"year":2083,"ft":1.0619},{"year":2084,"ft":1.0775},{"year":2085,"ft":1.093},{"year":2086,"ft":1.1084},{"year":2087,"ft":1.1237},{"year":2088,"ft":1.1389},{"year":2089,"ft":1.154},{"year":2090,"ft":1.169},{"year":2091,"ft":1.1839},{"year":2092,"ft":1.1987},{"year":2093,"ft":1.2133},{"year":2094,"ft":1.2279},{"year":2095,"ft":1.2424},{"year":2096,"ft":1.2567},{"year":2097,"ft":1.271},{"year":2098,"ft":1.2851},{"year":2099,"ft":1.2992},{"year":2100,"ft":1.3131}]},{"id":"Intermediate","label":"Intermediate","formula":{"a":0.0002074955,"b":0.0286257216},"points":[{"year":2026,"ft":0.0},{"year":2027,"ft":0.0288},{"year":2028,"ft":0.0581},{"year":2029,"ft":0.0877},{"year":2030,"ft":0.1178},{"year":2031,"ft":0.1483},{"year":2032,"ft":0.1792},{"year":2033,"ft":0.2105},{"year":2034,"ft":0.2423},{"year":2035,"ft":0.2744},{"year":2036,"ft":0.307},{"year":2037,"ft":0.34},{"year":2038,"ft":0.3734},{"year":2039,"ft":0.4072},{"year":2040,"ft":0.4414},{"year":2041,"ft":0.4761},{"year":2042,"ft":0.5111},{"year":2043,"ft":0.5466},{"year":2044,"ft":0.5825},{"year":2045,"ft":0.6188},{"year":2046,"ft":0.6555},{"year":2047,"ft":0.6926},{"year":2048,"ft":0.7302},{"year":2049,"ft":0.7682},{"year":2050,"ft":0.8065},{"year":2051,"ft":0.8453},{"year":2052,"ft":0.8845},{"year":2053,"ft":0.9242},{"year":2054,"ft":0.9642},{"year":2055,"ft":1.0046},{"year":2056,"ft":1.0455},{"year":2057,"ft":1.0868},{"year":2058,"ft":1.1285},{"year":2059,"ft":1.1706},{"year":2060,"ft":1.2131},{"year":2061,"ft":1.2561},{"year":2062,"ft":1.2994},{"year":2063,"ft":1.3432},{"year":2064,"ft":1.3874},{"year":2065,"ft":1.432},{"year":2066,"ft":1.477},{"year":2067,"ft":1.5225},{"year":2068,"ft":1.5683},{"year":2069,"ft":1.6146},{"year":2070,"ft":1.6612},{"year":2071,"ft":1.7083},{"year":2072,"ft":1.7558},{"year":2073,"ft":1.8038},{"year":2074,"ft":1.8521},{"year":2075,"ft":1.9009},{"year":2076,"ft":1.95},{"year":2077,"ft":1.9996},{"year":2078,"ft":2.0496},{"year":2079,"ft":2.1},{"year":2080,"ft":2.1508},{"year":2081,"ft":2.2021},{"year":2082,"ft":2.2537},{"year":2083,"ft":2.3058},{"year":2084,"ft":2.3583},{"year":2085,"ft":2.4112},{"year":2086,"ft":2.4645},{"year":2087,"ft":2.5183},{"year":2088,"ft":2.5724},{"year":2089,"ft":2.627},{"year":2090,"ft":2.6819},{"year":2091,"ft":2.7373},{"year":2092,"ft":2.7931},{"year":2093,"ft":2.8494},{"year":2094,"ft":2.906},{"year":2095,"ft":2.9631},{"year":2096,"ft":3.0205},{"year":2097,"ft":3.0784},{"year":2098,"ft":3.1367},{"year":2099,"ft":3.1954},{"year":2100,"ft":3.2545}]},{"id":"High","label":"High","formula":{"a":0.0003325351,"b":0.0527281984},"points":[{"year":2026,"ft":0.0},{"year":2027,"ft":0.0531},{"year":2028,"ft":0.1068},{"year":2029,"ft":0.1612},{"year":2030,"ft":0.2162},{"year":2031,"ft":0.272},{"year":2032,"ft":0.3283},{"year":2033,"ft":0.3854},{"year":2034,"ft":0.4431},{"year":2035,"ft":0.5015},{"year":2036,"ft":0.5605},{"year":2037,"ft":0.6202},{"year":2038,"ft":0.6806},{"year":2039,"ft":0.7417},{"year":2040,"ft":0.8034},{"year":2041,"ft":0.8657},{"year":2042,"ft":0.9288},{"year":2043,"ft":0.9925},{"year":2044,"ft":1.0568},{"year":2045,"ft":1.1219},{"year":2046,"ft":1.1876},{"year":2047,"ft":1.2539},{"year":2048,"ft":1.321},{"year":2049,"ft":1.3887},{"year":2050,"ft":1.457},{"year":2051,"ft":1.526},{"year":2052,"ft":1.5957},{"year":2053,"ft":1.6661},{"year":2054,"ft":1.7371},{"year":2055,"ft":1.8088},{"year":2056,"ft":1.8811},{"year":2057,"ft":1.9541},{"year":2058,"ft":2.0278},{"year":2059,"ft":2.1022},{"year":2060,"ft":2.1772},{"year":2061,"ft":2.2528},{"year":2062,"ft":2.3292},{"year":2063,"ft":2.4062},{"year":2064,"ft":2.4839},{"year":2065,"ft":2.5622},{"year":2066,"ft":2.6412},{"year":2067,"ft":2.7208},{"year":2068,"ft":2.8012},{"year":2069,"ft":2.8822},{"year":2070,"ft":2.9638},{"year":2071,"ft":3.0462},{"year":2072,"ft":3.1291},{"year":2073,"ft":3.2128},{"year":2074,"ft":3.2971},{"year":2075,"ft":3.3821},{"year":2076,"ft":3.4677},{"year":2077,"ft":3.5541},{"year":2078,"ft":3.641},{"year":2079,"ft":3.7287},{"year":2080,"ft":3.817},{"year":2081,"ft":3.906},{"year":2082,"ft":3.9956},{"year":2083,"ft":4.0859},{"year":2084,"ft":4.1769},{"year":2085,"ft":4.2685},{"year":2086,"ft":4.3608},{"year":2087,"ft":4.4538},{"year":2088,"ft":4.5474},{"year":2089,"ft":4.6417},{"year":2090,"ft":4.7367},{"year":2091,"ft":4.8323},{"year":2092,"ft":4.9286},{"year":2093,"ft":5.0255},{"year":2094,"ft":5.1232},{"year":2095,"ft":5.2214},{"year":2096,"ft":5.3204},{"year":2097,"ft":5.42},{"year":2098,"ft":5.5203},{"year":2099,"ft":5.6212},{"year":2100,"ft":5.7228}]}]};
 const SEA_LEVEL_JSON_FILE = "sealevel.json";
