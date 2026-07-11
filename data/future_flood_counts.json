@@ -5,7 +5,7 @@
     "trend": "site linear sea-level trend is fit after removing monthly seasonal effects from cached monthly mean sea level",
     "futureFit": "empirical residual exceedance probabilities evaluated at jurisdiction sea-level scenario deltas",
     "uncertainty": "analytical binomial p05/p50/p95 count approximation for annual high-tide draws; no Monte Carlo sampling",
-    "bins": "exclusive nearFlood/minor/moderate/major NAVD88 threshold bins; nearFlood is within 0.5 ft below minor flooding"
+    "bins": "exclusive minor/moderate/major NAVD88 threshold bins"
   },
   "status": "no-high-tide-pool",
   "highTideCount": 0,
