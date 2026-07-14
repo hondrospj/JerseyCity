@@ -1649,5 +1649,10 @@
     }
   },
   "trendMethod": "deseasonalized_monthly_mean_linear_regression",
-  "regression_updated_utc": "2026-07-01T02:02:04.013284+00:00"
+  "regression_updated_utc": "2026-07-01T02:02:04.013284+00:00",
+  "qualityControl": {
+    "minimumDailyValuesPerMonth": null,
+    "excludedMonths": [],
+    "method": "Exclude incomplete USGS months and configured station discontinuities from trend analysis"
+  }
 }

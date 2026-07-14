@@ -6,7 +6,7 @@
     "id": "Baseline",
     "label": "Baseline",
     "trendFtPerYear": 0.01888744,
-    "trendMethod": "deseasonalized_monthly_mean_linear_regression"
+    "trendMethod": "quality_controlled_deseasonalized_monthly_mean_linear_regression"
   },
   "observedTrendFtPerYear": 0.018887,
   "scenarios": [
