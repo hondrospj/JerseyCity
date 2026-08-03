@@ -181,8 +181,10 @@ async function fetchNOAAWaterLevelChunk({ station, product, datum, beginDate, en
   const arr = Array.isArray(j?.data) ? j.data : [];
   return arr
     .map(p => {
-      const ft = Number(p.v);
-      if (!Number.isFinite(ft) || !p.t) return null;
+      const rawValue = p?.v;
+      if (rawValue == null || String(rawValue).trim() === "" || !p?.t) return null;
+      const ft = Number(rawValue);
+      if (!Number.isFinite(ft)) return null;
 
       return {
         t: new Date(String(p.t).replace(" ", "T") + "Z").toISOString(),
