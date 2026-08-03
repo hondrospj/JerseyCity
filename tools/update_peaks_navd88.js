@@ -27,8 +27,8 @@ const path = require("path");
 // -------------------------
 const CACHE_PATH = path.join(__dirname, "..", "data", "peaks_navd88.json");
 
-const NOAA_OBS_STATION = "8530884";      // Cape May NOAA observations
-const NOAA_TIDECLOCK_STATION = "8530884"; // use Cape May NOAA highs too
+const NOAA_OBS_STATION = "8530882";       // Port Elizabeth, Newark Bay observations
+const NOAA_TIDECLOCK_STATION = "8530882"; // local Port Elizabeth high-tide clock
 const NOAA_OBS_DATUM = "NAVD";
 const NAVD_MINUS_MLLW = -3.03;
 
@@ -384,8 +384,8 @@ async function main() {
   const cache = loadJSON(CACHE_PATH);
 
   // Ensure required metadata exists (you already store these)
- cache.site = cache.site || NOAA_OBS_STATION;
-delete cache.parameterCd;
+  cache.site = NOAA_OBS_STATION;
+  delete cache.parameterCd;
   cache.datum = cache.datum || "NAVD88";
   cache.peakMinSepMinutes = cache.peakMinSepMinutes || PEAK_MIN_SEP_MINUTES;
 
@@ -439,6 +439,7 @@ delete cache.parameterCd;
 // 1) Fetch observed series from NOAA
 const series = await fetchNOAAObservedWaterLevels({ startISO, endISO });
   if (!series.length) {
+    saveJSON(CACHE_PATH, cache);
     console.log("No series points returned; nothing to do.");
     return;
   }
