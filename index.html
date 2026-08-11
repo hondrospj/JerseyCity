@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Coastal Flooding Dashboard</title>
+  <title>Jersey City Coastal Flooding Dashboard</title>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
@@ -8803,7 +8803,7 @@ refreshDOYFromHistory();
 }
 
 
-const GAUGE_DISPLAY_NAME = "Newark";
+const GAUGE_DISPLAY_NAME = "Jersey City";
 const GAUGE_TYPE = "NOAA";
 const JURISDICTION_SOURCE = "The Battery";
 const DEFAULT_GAUGE_ID = "8530882";
@@ -8819,7 +8819,7 @@ const NOAA_STATION_TIDECLOCK = "8518750";
 const CREST_WINDOW_HOURS = 2;
 const REQUIRE_WITHIN_HOURS = 1;
 const LIVE_START_ISO = "2026-01-01T00:00:00Z";
-const ALERT_POINT = {"lat":39.0,"lon":-74.7};
+const ALERT_POINT = {"lat":40.7180254,"lon":-74.0714779};
 let DISPLAY_DATUM = "MLLW";
 const DATUMS = ["MLLW","NAVD88","MSL","MHHW"];
 const OFFSET_FROM_MLLW = {"MLLW":0.0,"NAVD88":-3.03,"MSL":-2.92,"MHHW":-5.77};
@@ -9016,13 +9016,13 @@ const GAUGES = [
     "repo": "Margate"
   },
   {
-    "name": "Newark",
+    "name": "Jersey City",
     "agency": "NOAA",
     "id": "8530882",
     "lat": 40.6733,
     "lon": -74.14,
-    "url": "https://hondrospj.github.io/Newark/",
-    "repo": "Newark"
+    "url": "https://hondrospj.github.io/JerseyCity/",
+    "repo": "JerseyCity"
   },
   {
     "name": "Newbold Island",

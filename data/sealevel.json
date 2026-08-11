@@ -5,13 +5,13 @@
   "datum": "MSL",
   "source": "NOAA monthly_mean MSL",
   "stationSelection": {
-    "method": "Prefer a current record, then the candidate with the most valid NOAA monthly means",
+    "method": "Prefer the local station when it has at least 30 years of current monthly data; otherwise prefer a current candidate with the most valid monthly means",
     "candidates": [
       {
         "station": "8518750",
-        "months": 1513,
+        "months": 1514,
         "start": "1900-01",
-        "end": "2026-06",
+        "end": "2026-07",
         "current": true
       },
       {
@@ -23,16 +23,26 @@
       }
     ]
   },
+  "officialTrend": {
+    "station": "8518750",
+    "stationName": "The Battery",
+    "startYear": 1856,
+    "endYear": 2025,
+    "millimetersPerYear": 2.95,
+    "standardErrorMillimetersPerYear": 0.09,
+    "slopeFtPerYear": 0.009678477690288715,
+    "source": "https://tidesandcurrents.noaa.gov/sltrends/slmap.xml"
+  },
   "qualityControl": {
     "minimumDailyValuesPerMonth": null,
     "excludedMonths": [],
     "method": "Use finite monthly MSL values from the full NOAA station archive"
   },
-  "updated_utc": "2026-08-02T23:58:07.089Z",
+  "updated_utc": "2026-08-11T13:38:39.165Z",
   "regression": {
     "slopeFtPerYear": 0.009678477690288715,
-    "interceptFt": -19.271318110689293,
-    "monthlyPoints": 1513,
+    "interceptFt": -19.271119711877226,
+    "monthlyPoints": 1514,
     "method": "NOAA_official_linear_relative_mean_sea_level_trend",
     "officialTrend": {
       "station": "8518750",
@@ -45,43 +55,43 @@
       "source": "https://tidesandcurrents.noaa.gov/sltrends/slmap.xml"
     },
     "calculatedRegression": {
-      "slopeFtPerYear": 0.010456613477808583,
-      "interceptFt": -20.799103945244163,
-      "monthlyPoints": 1513,
+      "slopeFtPerYear": 0.010460078508864469,
+      "interceptFt": -20.8057412936013,
+      "monthlyPoints": 1514,
       "method": "deseasonalized_monthly_mean_linear_regression",
       "rawRegression": {
-        "slopeFtPerYear": 0.01044499613508611,
-        "interceptFt": -20.776294544699482,
-        "monthlyPoints": 1513
+        "slopeFtPerYear": 0.010452875308435531,
+        "interceptFt": -20.791598285331894,
+        "monthlyPoints": 1514
       },
       "seasonalAdjustmentsFt": {
-        "10": 0.184657,
-        "11": -0.009626,
-        "12": -0.217504,
-        "01": -0.313828,
-        "02": -0.312024,
-        "03": -0.159561,
-        "04": 0.009791,
-        "05": 0.079365,
-        "06": 0.158405,
-        "07": 0.1403,
-        "08": 0.197557,
-        "09": 0.24121
+        "10": 0.184492,
+        "11": -0.009792,
+        "12": -0.217671,
+        "01": -0.313994,
+        "02": -0.31219,
+        "03": -0.159728,
+        "04": 0.009623,
+        "05": 0.079196,
+        "06": 0.158238,
+        "07": 0.141013,
+        "08": 0.197393,
+        "09": 0.241045
       }
     },
     "seasonalAdjustmentsFt": {
-      "10": 0.184657,
-      "11": -0.009626,
-      "12": -0.217504,
-      "01": -0.313828,
-      "02": -0.312024,
-      "03": -0.159561,
-      "04": 0.009791,
-      "05": 0.079365,
-      "06": 0.158405,
-      "07": 0.1403,
-      "08": 0.197557,
-      "09": 0.24121
+      "10": 0.184492,
+      "11": -0.009792,
+      "12": -0.217671,
+      "01": -0.313994,
+      "02": -0.31219,
+      "03": -0.159728,
+      "04": 0.009623,
+      "05": 0.079196,
+      "06": 0.158238,
+      "07": 0.141013,
+      "08": 0.197393,
+      "09": 0.241045
     }
   },
   "daily": [],
@@ -7650,24 +7660,11 @@
       "month": "2026-06",
       "ft": 0.525,
       "days": null
+    },
+    {
+      "month": "2026-07",
+      "ft": 0.643,
+      "days": null
     }
-  ],
-  "officialTrend": {
-    "station": "8518750",
-    "stationName": "The Battery",
-    "startYear": 1856,
-    "endYear": 2025,
-    "millimetersPerYear": 2.95,
-    "standardErrorMillimetersPerYear": 0.09,
-    "slopeFtPerYear": 0.009678477690288715,
-    "source": "https://tidesandcurrents.noaa.gov/sltrends/slmap.xml"
-  },
-  "trendStationSelection": {
-    "method": "Use the selected NOAA monthly-mean station's official long-term relative sea-level trend",
-    "candidates": [
-      "8530882",
-      "8518750"
-    ],
-    "selected": "8518750"
-  }
+  ]
 }
