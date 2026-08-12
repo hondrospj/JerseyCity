@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Crest-anchored NAVD88 "high tide events" builder for USGS 01412150 (param 72279)
+ * Crest-anchored NAVD88 "high tide events" builder for USGS 01392650 (param 72279)
  * - Uses NOAA CO-OPS predicted HIGH tide crest times (interval=hilo, type=H) as the "tide clock"
  * - For each predicted HIGH tide crest:
  *    - Search observed USGS IV points within ±2 hours and take the MAX
@@ -27,10 +27,11 @@ const path = require("path");
 // -------------------------
 const CACHE_PATH = path.join(__dirname, "..", "data", "peaks_navd88.json");
 
-const NOAA_OBS_STATION = "8530882";       // Port Elizabeth, Newark Bay observations
-const NOAA_TIDECLOCK_STATION = "8530882"; // local Port Elizabeth high-tide clock
-const NOAA_OBS_DATUM = "NAVD";
-const NAVD_MINUS_MLLW = -3.03;
+const SITE = "01392650";
+const PARAM = "72279";
+
+// NOAA tide-clock (predicted highs/lows) — used ONLY for crest times
+const NOAA_STATION = "8530884"; // Port Newark Terminal, local Newark Bay tide clock
 
 // Keep this in cache for transparency; we still keep your 5-hour constant in JSON,
 // but we are no longer using declustering for cache building under this method.
@@ -44,7 +45,7 @@ const CREST_WINDOW_HOURS = 2;      // search max within ±2h of predicted crest
 const REQUIRE_WITHIN_HOURS = 1;    // if NO obs points within ±1h, skip that crest entirely
 
 // Method/version tag so you can cleanly rebuild without mixing old scheme
-const METHOD = "crest_anchored_highs_v1";
+const METHOD = "stitched_local_usgs_and_noaa_surrogate_highs_v2";
 
 // -------------------------
 // Helpers
@@ -153,112 +154,29 @@ function applyOfficialCrestDateAuthority(events) {
 // -------------------------
 // USGS IV fetch (15-min-ish)
 // -------------------------
-async function fetchNOAAWaterLevelChunk({ station, product, datum, beginDate, endDate }) {
+async function fetchUSGSIV({ startISO, endISO }) {
   const url =
-    "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?" +
+    "https://waterservices.usgs.gov/nwis/iv/?" +
     new URLSearchParams({
-      product,
-      application: "peaks-cache",
       format: "json",
-      station,
-      time_zone: "gmt",
-      units: "english",
-      datum,
-      begin_date: beginDate,
-      end_date: endDate
+      sites: SITE,
+      parameterCd: PARAM,
+      startDT: startISO,
+      endDT: endISO,
+      siteStatus: "all",
+      agencyCd: "USGS"
     }).toString();
 
   const res = await fetch(url, { headers: { "User-Agent": "peaks-cache/2.0" } });
-  if (!res.ok) {
-    throw new Error(`NOAA fetch failed: ${res.status} ${res.statusText}`);
-  }
-
+  if (!res.ok) throw new Error(`USGS IV fetch failed: ${res.status} ${res.statusText}`);
   const j = await res.json();
-  if (j?.error?.message) {
-    throw new Error(j.error.message);
-  }
 
-  const arr = Array.isArray(j?.data) ? j.data : [];
-  return arr
-    .map(p => {
-      const rawValue = p?.v;
-      if (rawValue == null || String(rawValue).trim() === "" || !p?.t) return null;
-      const ft = Number(rawValue);
-      if (!Number.isFinite(ft)) return null;
+  const ts = j?.value?.timeSeries?.[0];
+  const vals = ts?.values?.[0]?.value || [];
 
-      return {
-        t: new Date(String(p.t).replace(" ", "T") + "Z").toISOString(),
-        ft
-      };
-    })
-    .filter(Boolean);
-}
-
-async function fetchNOAAObservedWaterLevels({ startISO, endISO }) {
-  const start = new Date(startISO);
-  const end = new Date(endISO);
-  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
-    throw new Error("Invalid startISO/endISO for NOAA observations.");
-  }
-
-  const series = [];
-  let cur = startOfUTCDate(start);
-  const endDay = startOfUTCDate(end);
-
-  while (cur <= endDay) {
-    const chunkEnd = addDaysUTC(cur, 30);
-    const actualEnd = chunkEnd < endDay ? chunkEnd : endDay;
-
-    const beginDate = yyyymmddUTC(cur);
-    const endDate = yyyymmddUTC(actualEnd);
-
-    let chunk = [];
-
-    try {
-      // First try: NOAA 6-minute water_level in NAVD
-      chunk = await fetchNOAAWaterLevelChunk({
-        station: NOAA_OBS_STATION,
-        product: "water_level",
-        datum: "NAVD",
-        beginDate,
-        endDate
-      });
-    } catch (errNavd) {
-      const navdMsg = String(errNavd?.message || errNavd);
-
-      try {
-        // Fallback: NOAA 6-minute water_level in MLLW
-        const mllwChunk = await fetchNOAAWaterLevelChunk({
-          station: NOAA_OBS_STATION,
-          product: "water_level",
-          datum: "MLLW",
-          beginDate,
-          endDate
-        });
-
-        chunk = mllwChunk.map(p => ({
-          t: p.t,
-          ft: roundFt(p.ft + NAVD_MINUS_MLLW)
-        }));
-
-        console.log(`Fallback used for ${beginDate}-${endDate}: water_level MLLW -> NAVD`);
-      } catch (errMllw) {
-        const mllwMsg = String(errMllw?.message || errMllw);
-
-        // Do NOT crash the whole workflow just because one chunk failed
-        console.warn(
-          `Skipping observations chunk ${beginDate}-${endDate}. ` +
-          `NAVD failed: ${navdMsg}. ` +
-          `MLLW failed: ${mllwMsg}.`
-        );
-
-        chunk = [];
-      }
-    }
-
-    series.push(...chunk);
-    cur = addDaysUTC(actualEnd, 1);
-  }
+  const series = vals
+    .map(v => ({ t: v.dateTime, ft: Number(v.value) }))
+    .filter(p => p.t && Number.isFinite(p.ft));
 
   series.sort((a, b) => new Date(a.t) - new Date(b.t));
   return series;
@@ -289,7 +207,7 @@ async function fetchNOAAHiloPredictionsHighs({ startISO, endISO }) {
         product: "predictions",
         application: "peaks-cache",
         format: "json",
-        station: NOAA_TIDECLOCK_STATION,
+        station: NOAA_STATION,
         time_zone: "gmt",
         units: "english",
         interval: "hilo",
@@ -386,8 +304,8 @@ async function main() {
   const cache = loadJSON(CACHE_PATH);
 
   // Ensure required metadata exists (you already store these)
-  cache.site = NOAA_OBS_STATION;
-  delete cache.parameterCd;
+  cache.site = SITE;
+  cache.parameterCd = PARAM;
   cache.datum = cache.datum || "NAVD88";
   cache.peakMinSepMinutes = cache.peakMinSepMinutes || PEAK_MIN_SEP_MINUTES;
 
@@ -395,17 +313,14 @@ async function main() {
   if (!THRESH_NAVD88) {
     die(
       "Missing NAVD88 thresholds. Add thresholdsNAVD88 to data/peaks_navd88.json, e.g.\n" +
-      '  "thresholdsNAVD88": {"minorLow": 3.93, "moderateLow": 4.93, "majorLow": 5.93}\n'
+      '  "thresholdsNAVD88": {"minorLow": 4.19, "moderateLow": 5.19, "majorLow": 6.19}\n'
     );
   }
 
-  // If method changed, clear events to avoid mixing old peak scheme with crest-anchored scheme
+  // Preserve the immutable pre-local-gauge backfill when the live updater runs.
   if (cache.method !== METHOD) {
-    console.log(`Method changed (${cache.method || "none"} -> ${METHOD}). Clearing events for clean rebuild.`);
+    console.log(`Method metadata changed (${cache.method || "none"} -> ${METHOD}); preserving stitched history.`);
     cache.method = METHOD;
-    cache.events = (Array.isArray(cache.events) ? cache.events : []).filter(event => event?.officialCrestOverride);
-    // Preserve authoritative USGS storm crests across local cache-method rebuilds.
-    // Leave lastProcessedISO as-is; you can run a backfill range to rebuild.
   }
 
   const backfillYear = parseArg("--backfill-year");
@@ -438,10 +353,9 @@ async function main() {
     console.log(`Incremental: ${startISO} → ${endISO}`);
   }
 
-// 1) Fetch observed series from NOAA
-const series = await fetchNOAAObservedWaterLevels({ startISO, endISO });
+  // 1) Fetch observed series from USGS
+  const series = await fetchUSGSIV({ startISO, endISO });
   if (!series.length) {
-    saveJSON(CACHE_PATH, cache);
     console.log("No series points returned; nothing to do.");
     return;
   }

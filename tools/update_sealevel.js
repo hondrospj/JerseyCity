@@ -2,9 +2,9 @@ const fs = require("fs/promises");
 const path = require("path");
 const { execFileSync } = require("child_process");
 
-const GAUGE_TYPE = "NOAA";
-const USGS_SITE = "8530882";
-const USGS_PARAM = "water_level";
+const GAUGE_TYPE = "USGS";
+const USGS_SITE = "01392650";
+const USGS_PARAM = "72279";
 const NOAA_STATIONS = ["8530882","8518750"];
 const NOAA_MONTHLY_BEGIN_DATE = "19000101";
 const NOAA_OFFICIAL_TRENDS_URL = "https://tidesandcurrents.noaa.gov/sltrends/slmap.xml";
