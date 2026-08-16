@@ -9,7 +9,7 @@
     "majorLow": 6.97
   },
   "method": "stitched_local_usgs_and_noaa_surrogate_highs_v2",
-  "lastProcessedISO": "2026-08-16T14:54:00.000Z",
+  "lastProcessedISO": "2026-08-16T15:24:00.000Z",
   "events": [
     {
       "t": "1927-02-20T16:00:00Z",
@@ -222310,8 +222310,8 @@
       "kind": "CrestHigh"
     },
     {
-      "t": "2026-08-16T14:54:00.000Z",
-      "ft": 2.96,
+      "t": "2026-08-16T15:24:00.000Z",
+      "ft": 3.21,
       "type": "Below",
       "crest": "2026-08-16T15:53:00.000Z",
       "kind": "CrestHigh"
