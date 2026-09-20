@@ -8816,28 +8816,28 @@ refreshDOYFromHistory();
 
 
 const TOWN_DISPLAY_NAME = "Jersey City";
-const GAUGE_DISPLAY_NAME = "Newark Bay at PVSC at Newark";
+const GAUGE_DISPLAY_NAME = "Newark";
 const GAUGE_TYPE = "USGS";
 const JURISDICTION_SOURCE = "Newark Bay at PVSC";
 const DEFAULT_GAUGE_ID = "01392650";
 const DEFAULT_GAUGE_ZOOM = 12;
 const USGS_SITE = "01392650";
 const USGS_PARAM_PRIMARY = "72279";
-const NOAA_OBS_STATION = "8530882";
-const NOAA_STATION_CANDIDATES = ["8530882","8518750"];
-const NOAA_SEA_LEVEL_STATION_CANDIDATES = ["8530882","8518750"];
-const COOPS_STATION = "8530882";
+const NOAA_OBS_STATION = "8518750";
+const NOAA_STATION_CANDIDATES = ["8518750"];
+const NOAA_SEA_LEVEL_STATION_CANDIDATES = ["8518750"];
+const COOPS_STATION = "8518750";
 const COOPS_APP = "cupajoe.live";
-const NOAA_STATION_TIDECLOCK = "8530884";
+const NOAA_STATION_TIDECLOCK = "8518750";
 const CREST_WINDOW_HOURS = 2;
 const REQUIRE_WITHIN_HOURS = 1;
 const LIVE_START_ISO = "2026-01-01T00:00:00Z";
 const ALERT_POINT = {"lat":40.7180254,"lon":-74.0714779};
 let DISPLAY_DATUM = "MLLW";
 const DATUMS = ["MLLW","NAVD88","MSL","MHHW"];
-const OFFSET_FROM_MLLW = {"MLLW":0.0,"NAVD88":-3.03,"MSL":-2.92,"MHHW":-5.77};
-const THRESH = {"MLLW":{"minorLow":7.3,"moderateLow":8.5,"majorLow":10.0},"NAVD88":{"minorLow":4.27,"moderateLow":5.47,"majorLow":6.97},"MSL":{"minorLow":4.38,"moderateLow":5.58,"majorLow":7.08},"MHHW":{"minorLow":1.53,"moderateLow":2.73,"majorLow":4.23}};
-const TOP_TEN_MLLW = [{"date":"11-25-1950","ft":10.74},{"date":"10-25-1980","ft":9.23},{"date":"10-30-2012","ft":9.16},{"date":"10-29-2021","ft":8.91},{"date":"01-23-2016","ft":8.65},{"date":"05-12-2008","ft":8.6},{"date":"01-10-2024","ft":8.44},{"date":"08-21-2025","ft":8.22},{"date":"02-17-2003","ft":8.12},{"date":"04-12-2024","ft":8.06}];
+const OFFSET_FROM_MLLW = {"MLLW":0,"NAVD88":-3.03,"MSL":-2.92,"MHHW":-5.77};
+const THRESH = {"MLLW":{"minorLow":7.3,"moderateLow":8.5,"majorLow":10},"NAVD88":{"minorLow":4.27,"moderateLow":5.47,"majorLow":6.97},"MSL":{"minorLow":4.38,"moderateLow":5.58,"majorLow":7.08},"MHHW":{"minorLow":1.53,"moderateLow":2.73,"majorLow":4.23}};
+const TOP_TEN_MLLW = [{"date":"08-28-2011","ft":13.3},{"date":"03-13-2010","ft":11.89},{"date":"09-02-2021","ft":11.77},{"date":"10-27-2018","ft":10.73},{"date":"04-16-2007","ft":10.65},{"date":"10-19-1996","ft":10.54},{"date":"09-16-1999","ft":9.65},{"date":"12-23-2022","ft":9.64},{"date":"01-01-2013","ft":9.57},{"date":"04-29-2014","ft":9.57}];
 const GAUGES = [
   {
     "name": "Absecon Creek at Absecon",
@@ -9186,6 +9186,7 @@ const PETSS_JSON_CANDIDATES = [
   `/data/petss_forecast_${COOPS_STATION}_mllw.json`
 ];
 const PEAKS_JSON_FILE = "peaks_navd88.json";
+const FLOODMAPPER_V2_PIPELINE = {"releaseVersion":"20260920-nj-universal-v2","primaryUsgsGaugeId":"01392650","noaaStationId":"8518750","noaaBiasCorrectionFt":0.263,"crestUsgsStationId":"01396035","sourcePrecedence":["primary-usgs-continuous","bias-corrected-noaa-historical-fill","official-usgs-storm-tide-crest-override"]};
 const PEAKS_JSON_PATH_CANDIDATES = [
   `data/${PEAKS_JSON_FILE}`,
   `./data/${PEAKS_JSON_FILE}`,

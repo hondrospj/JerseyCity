@@ -1,0 +1,11 @@
+{
+  "schema": "nj-flood-dashboard-gauge-pipeline-v2",
+  "releaseVersion": "20260920-nj-universal-v2",
+  "floodmapperRepo": "Jersey-City-floodmapper",
+  "primaryUsgsGaugeId": "01392650",
+  "noaaStationId": "8518750",
+  "noaaRegion": "the-battery",
+  "noaaBiasCorrectionFt": 0.263,
+  "crestUsgsStationId": "01396035",
+  "calibrationPairKey": "01392650:the-battery"
+}
