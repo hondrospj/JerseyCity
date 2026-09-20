@@ -31,7 +31,7 @@ const SITE = "01392650";
 const PARAM = "72279";
 
 // NOAA tide-clock (predicted highs/lows) — used ONLY for crest times
-const NOAA_STATION = "8530884"; // Port Newark Terminal, local Newark Bay tide clock
+const NOAA_STATION = "8518750"; // regional NOAA tide clock
 
 // Keep this in cache for transparency; we still keep your 5-hour constant in JSON,
 // but we are no longer using declustering for cache building under this method.
@@ -290,7 +290,11 @@ function buildCrestAnchoredHighEvents({ series, predictedHighs, thresholdsNAVD88
       ft: roundFt(ft),
       type: classifyNAVD(ft, thresholdsNAVD88),
       crest: new Date(crestISO).toISOString(), // predicted crest time (key)
-      kind: "CrestHigh"
+      kind: "CrestHigh",
+      historyAgency: "USGS",
+      historySource: `USGS ${SITE} primary continuous record`,
+      source: "primary-usgs-continuous",
+      localDate: officialCrestLocalDate({ t: best.t })
     });
   }
 
