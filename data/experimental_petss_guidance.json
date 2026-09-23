@@ -1,6 +1,6 @@
 {
   "schema": "experimental-petss-guidance-v1",
-  "generatedUtc": "2026-09-23T18:29:10.914779Z",
+  "generatedUtc": "2026-09-23T18:33:23.017150Z",
   "model": {
     "version": "research-pooled-v1-20260923",
     "official": false,
@@ -60,7 +60,7 @@
       "stationId": "8530743",
       "petssCycleUtc": "2026-09-23T12:00:00Z",
       "sourceUrl": "https://nomads.ncep.noaa.gov/pub/data/nccf/com/petss/prod/petss.20260923/petss.t12z.csv.tar.gz",
-      "cycleAgeHours": 6.49,
+      "cycleAgeHours": 6.56,
       "status": "experimental",
       "hours": [
         {
@@ -860,671 +860,671 @@
           "modelLeadHours": 12.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 7.568,
+          "issuedMeanMllwFt": 7.463,
           "astronomicalTideMllwFt": 5.358,
-          "correctedCentralMllwFt": 7.059,
+          "correctedCentralMllwFt": 6.987,
           "issuedLower10MllwFt": 7.368,
-          "estimatedLowerQuartileMllwFt": 6.837
+          "estimatedLowerQuartileMllwFt": 6.775
         },
         {
           "validUtc": "2026-09-24T01:00:00.000Z",
           "modelLeadHours": 13.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 6.579,
+          "issuedMeanMllwFt": 6.474,
           "astronomicalTideMllwFt": 4.371,
-          "correctedCentralMllwFt": 6.059,
+          "correctedCentralMllwFt": 5.987,
           "issuedLower10MllwFt": 6.379,
-          "estimatedLowerQuartileMllwFt": 5.836
+          "estimatedLowerQuartileMllwFt": 5.775
         },
         {
           "validUtc": "2026-09-24T02:00:00.000Z",
           "modelLeadHours": 14.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 5.397,
+          "issuedMeanMllwFt": 5.292,
           "astronomicalTideMllwFt": 3.192,
-          "correctedCentralMllwFt": 4.866,
+          "correctedCentralMllwFt": 4.795,
           "issuedLower10MllwFt": 5.197,
-          "estimatedLowerQuartileMllwFt": 4.641
+          "estimatedLowerQuartileMllwFt": 4.581
         },
         {
           "validUtc": "2026-09-24T03:00:00.000Z",
           "modelLeadHours": 15.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 4.32,
+          "issuedMeanMllwFt": 4.215,
           "astronomicalTideMllwFt": 2.117,
-          "correctedCentralMllwFt": 3.777,
+          "correctedCentralMllwFt": 3.707,
           "issuedLower10MllwFt": 4.12,
-          "estimatedLowerQuartileMllwFt": 3.552
+          "estimatedLowerQuartileMllwFt": 3.492
         },
         {
           "validUtc": "2026-09-24T04:00:00.000Z",
           "modelLeadHours": 16.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 3.441,
+          "issuedMeanMllwFt": 3.336,
           "astronomicalTideMllwFt": 1.241,
-          "correctedCentralMllwFt": 2.887,
+          "correctedCentralMllwFt": 2.818,
           "issuedLower10MllwFt": 3.241,
-          "estimatedLowerQuartileMllwFt": 2.66
+          "estimatedLowerQuartileMllwFt": 2.602
         },
         {
           "validUtc": "2026-09-24T05:00:00.000Z",
           "modelLeadHours": 17.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 2.844,
+          "issuedMeanMllwFt": 2.739,
           "astronomicalTideMllwFt": 0.647,
-          "correctedCentralMllwFt": 2.279,
+          "correctedCentralMllwFt": 2.211,
           "issuedLower10MllwFt": 2.644,
-          "estimatedLowerQuartileMllwFt": 2.051
+          "estimatedLowerQuartileMllwFt": 1.993
         },
         {
           "validUtc": "2026-09-24T06:00:00.000Z",
           "modelLeadHours": 18.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 2.718,
+          "issuedMeanMllwFt": 2.613,
           "astronomicalTideMllwFt": 0.621,
-          "correctedCentralMllwFt": 2.177,
+          "correctedCentralMllwFt": 2.109,
           "issuedLower10MllwFt": 2.518,
-          "estimatedLowerQuartileMllwFt": 1.947
+          "estimatedLowerQuartileMllwFt": 1.89
         },
         {
           "validUtc": "2026-09-24T07:00:00.000Z",
           "modelLeadHours": 19.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 3.435,
+          "issuedMeanMllwFt": 3.33,
           "astronomicalTideMllwFt": 1.438,
-          "correctedCentralMllwFt": 2.919,
+          "correctedCentralMllwFt": 2.852,
           "issuedLower10MllwFt": 3.235,
-          "estimatedLowerQuartileMllwFt": 2.688
+          "estimatedLowerQuartileMllwFt": 2.632
         },
         {
           "validUtc": "2026-09-24T08:00:00.000Z",
           "modelLeadHours": 20.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 4.809,
+          "issuedMeanMllwFt": 4.704,
           "astronomicalTideMllwFt": 2.812,
-          "correctedCentralMllwFt": 4.282,
+          "correctedCentralMllwFt": 4.216,
           "issuedLower10MllwFt": 4.609,
-          "estimatedLowerQuartileMllwFt": 4.05
+          "estimatedLowerQuartileMllwFt": 3.995
         },
         {
           "validUtc": "2026-09-24T09:00:00.000Z",
           "modelLeadHours": 21.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 5.994,
+          "issuedMeanMllwFt": 5.941,
           "astronomicalTideMllwFt": 4.097,
-          "correctedCentralMllwFt": 5.495,
+          "correctedCentralMllwFt": 5.462,
           "issuedLower10MllwFt": 5.894,
-          "estimatedLowerQuartileMllwFt": 5.271
+          "estimatedLowerQuartileMllwFt": 5.244
         },
         {
           "validUtc": "2026-09-24T10:00:00.000Z",
           "modelLeadHours": 22.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 6.916,
+          "issuedMeanMllwFt": 6.863,
           "astronomicalTideMllwFt": 5.019,
-          "correctedCentralMllwFt": 6.407,
+          "correctedCentralMllwFt": 6.374,
           "issuedLower10MllwFt": 6.816,
-          "estimatedLowerQuartileMllwFt": 6.182
+          "estimatedLowerQuartileMllwFt": 6.155
         },
         {
           "validUtc": "2026-09-24T11:00:00.000Z",
           "modelLeadHours": 23.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 7.382,
+          "issuedMeanMllwFt": 7.277,
           "astronomicalTideMllwFt": 5.485,
-          "correctedCentralMllwFt": 6.863,
+          "correctedCentralMllwFt": 6.799,
           "issuedLower10MllwFt": 7.182,
-          "estimatedLowerQuartileMllwFt": 6.627
+          "estimatedLowerQuartileMllwFt": 6.574
         },
         {
           "validUtc": "2026-09-24T12:00:00.000Z",
           "modelLeadHours": 24.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 7.232,
+          "issuedMeanMllwFt": 7.127,
           "astronomicalTideMllwFt": 5.335,
-          "correctedCentralMllwFt": 6.703,
+          "correctedCentralMllwFt": 6.64,
           "issuedLower10MllwFt": 7.032,
-          "estimatedLowerQuartileMllwFt": 6.466
+          "estimatedLowerQuartileMllwFt": 6.414
         },
         {
           "validUtc": "2026-09-24T13:00:00.000Z",
           "modelLeadHours": 25.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 6.471,
+          "issuedMeanMllwFt": 6.366,
           "astronomicalTideMllwFt": 4.574,
-          "correctedCentralMllwFt": 5.941,
+          "correctedCentralMllwFt": 5.878,
           "issuedLower10MllwFt": 6.271,
-          "estimatedLowerQuartileMllwFt": 5.703
+          "estimatedLowerQuartileMllwFt": 5.651
         },
         {
           "validUtc": "2026-09-24T14:00:00.000Z",
           "modelLeadHours": 26.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 5.388,
+          "issuedMeanMllwFt": 5.283,
           "astronomicalTideMllwFt": 3.491,
-          "correctedCentralMllwFt": 4.856,
+          "correctedCentralMllwFt": 4.793,
           "issuedLower10MllwFt": 5.188,
-          "estimatedLowerQuartileMllwFt": 4.618
+          "estimatedLowerQuartileMllwFt": 4.566
         },
         {
           "validUtc": "2026-09-24T15:00:00.000Z",
           "modelLeadHours": 27.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 4.332,
+          "issuedMeanMllwFt": 4.279,
           "astronomicalTideMllwFt": 2.435,
-          "correctedCentralMllwFt": 3.798,
+          "correctedCentralMllwFt": 3.766,
           "issuedLower10MllwFt": 4.232,
-          "estimatedLowerQuartileMllwFt": 3.571
+          "estimatedLowerQuartileMllwFt": 3.544
         },
         {
           "validUtc": "2026-09-24T16:00:00.000Z",
           "modelLeadHours": 28.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 3.577,
+          "issuedMeanMllwFt": 3.472,
           "astronomicalTideMllwFt": 1.58,
-          "correctedCentralMllwFt": 3.001,
+          "correctedCentralMllwFt": 2.938,
           "issuedLower10MllwFt": 3.377,
-          "estimatedLowerQuartileMllwFt": 2.763
+          "estimatedLowerQuartileMllwFt": 2.711
         },
         {
           "validUtc": "2026-09-24T17:00:00.000Z",
           "modelLeadHours": 29.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 2.968,
+          "issuedMeanMllwFt": 2.863,
           "astronomicalTideMllwFt": 0.971,
-          "correctedCentralMllwFt": 2.39,
+          "correctedCentralMllwFt": 2.327,
           "issuedLower10MllwFt": 2.768,
-          "estimatedLowerQuartileMllwFt": 2.152
+          "estimatedLowerQuartileMllwFt": 2.1
         },
         {
           "validUtc": "2026-09-24T18:00:00.000Z",
           "modelLeadHours": 30.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 2.794,
+          "issuedMeanMllwFt": 2.689,
           "astronomicalTideMllwFt": 0.797,
-          "correctedCentralMllwFt": 2.214,
+          "correctedCentralMllwFt": 2.152,
           "issuedLower10MllwFt": 2.594,
-          "estimatedLowerQuartileMllwFt": 1.976
+          "estimatedLowerQuartileMllwFt": 1.924
         },
         {
           "validUtc": "2026-09-24T19:00:00.000Z",
           "modelLeadHours": 31.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 3.401,
+          "issuedMeanMllwFt": 3.296,
           "astronomicalTideMllwFt": 1.404,
-          "correctedCentralMllwFt": 2.819,
+          "correctedCentralMllwFt": 2.757,
           "issuedLower10MllwFt": 3.201,
-          "estimatedLowerQuartileMllwFt": 2.581
+          "estimatedLowerQuartileMllwFt": 2.529
         },
         {
           "validUtc": "2026-09-24T20:00:00.000Z",
           "modelLeadHours": 32.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 4.769,
+          "issuedMeanMllwFt": 4.664,
           "astronomicalTideMllwFt": 2.772,
-          "correctedCentralMllwFt": 4.185,
+          "correctedCentralMllwFt": 4.123,
           "issuedLower10MllwFt": 4.569,
-          "estimatedLowerQuartileMllwFt": 3.947
+          "estimatedLowerQuartileMllwFt": 3.895
         },
         {
           "validUtc": "2026-09-24T21:00:00.000Z",
           "modelLeadHours": 33.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 6.255,
+          "issuedMeanMllwFt": 6.15,
           "astronomicalTideMllwFt": 4.258,
-          "correctedCentralMllwFt": 5.669,
+          "correctedCentralMllwFt": 5.607,
           "issuedLower10MllwFt": 6.055,
-          "estimatedLowerQuartileMllwFt": 5.431
+          "estimatedLowerQuartileMllwFt": 5.379
         },
         {
           "validUtc": "2026-09-24T22:00:00.000Z",
           "modelLeadHours": 34.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 7.462,
+          "issuedMeanMllwFt": 7.304,
           "astronomicalTideMllwFt": 5.365,
-          "correctedCentralMllwFt": 6.833,
+          "correctedCentralMllwFt": 6.74,
           "issuedLower10MllwFt": 7.162,
-          "estimatedLowerQuartileMllwFt": 6.584
+          "estimatedLowerQuartileMllwFt": 6.507
         },
         {
           "validUtc": "2026-09-24T23:00:00.000Z",
           "modelLeadHours": 35.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 8.06,
+          "issuedMeanMllwFt": 7.902,
           "astronomicalTideMllwFt": 5.963,
-          "correctedCentralMllwFt": 7.429,
+          "correctedCentralMllwFt": 7.336,
           "issuedLower10MllwFt": 7.76,
-          "estimatedLowerQuartileMllwFt": 7.18
+          "estimatedLowerQuartileMllwFt": 7.103
         },
         {
           "validUtc": "2026-09-25T00:00:00.000Z",
           "modelLeadHours": 36.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 8.028,
+          "issuedMeanMllwFt": 7.923,
           "astronomicalTideMllwFt": 5.931,
-          "correctedCentralMllwFt": 7.395,
+          "correctedCentralMllwFt": 7.333,
           "issuedLower10MllwFt": 7.828,
-          "estimatedLowerQuartileMllwFt": 7.156
+          "estimatedLowerQuartileMllwFt": 7.105
         },
         {
           "validUtc": "2026-09-25T01:00:00.000Z",
           "modelLeadHours": 37.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 7.312,
+          "issuedMeanMllwFt": 7.207,
           "astronomicalTideMllwFt": 5.215,
-          "correctedCentralMllwFt": 6.677,
+          "correctedCentralMllwFt": 6.615,
           "issuedLower10MllwFt": 7.112,
-          "estimatedLowerQuartileMllwFt": 6.438
+          "estimatedLowerQuartileMllwFt": 6.387
         },
         {
           "validUtc": "2026-09-25T02:00:00.000Z",
           "modelLeadHours": 38.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 6.117,
+          "issuedMeanMllwFt": 5.959,
           "astronomicalTideMllwFt": 4.02,
-          "correctedCentralMllwFt": 5.48,
+          "correctedCentralMllwFt": 5.388,
           "issuedLower10MllwFt": 5.817,
-          "estimatedLowerQuartileMllwFt": 5.23
+          "estimatedLowerQuartileMllwFt": 5.154
         },
         {
           "validUtc": "2026-09-25T03:00:00.000Z",
           "modelLeadHours": 39.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 4.817,
+          "issuedMeanMllwFt": 4.659,
           "astronomicalTideMllwFt": 2.72,
-          "correctedCentralMllwFt": 4.178,
+          "correctedCentralMllwFt": 4.086,
           "issuedLower10MllwFt": 4.517,
-          "estimatedLowerQuartileMllwFt": 3.928
+          "estimatedLowerQuartileMllwFt": 3.852
         },
         {
           "validUtc": "2026-09-25T04:00:00.000Z",
           "modelLeadHours": 40.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 3.701,
+          "issuedMeanMllwFt": 3.596,
           "astronomicalTideMllwFt": 1.604,
-          "correctedCentralMllwFt": 3.06,
+          "correctedCentralMllwFt": 2.999,
           "issuedLower10MllwFt": 3.501,
-          "estimatedLowerQuartileMllwFt": 2.82
+          "estimatedLowerQuartileMllwFt": 2.77
         },
         {
           "validUtc": "2026-09-25T05:00:00.000Z",
           "modelLeadHours": 41.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 2.863,
+          "issuedMeanMllwFt": 2.758,
           "astronomicalTideMllwFt": 0.766,
-          "correctedCentralMllwFt": 2.22,
+          "correctedCentralMllwFt": 2.159,
           "issuedLower10MllwFt": 2.663,
-          "estimatedLowerQuartileMllwFt": 1.98
+          "estimatedLowerQuartileMllwFt": 1.93
         },
         {
           "validUtc": "2026-09-25T06:00:00.000Z",
           "modelLeadHours": 42.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 2.418,
+          "issuedMeanMllwFt": 2.313,
           "astronomicalTideMllwFt": 0.321,
-          "correctedCentralMllwFt": 1.772,
+          "correctedCentralMllwFt": 1.712,
           "issuedLower10MllwFt": 2.218,
-          "estimatedLowerQuartileMllwFt": 1.533
+          "estimatedLowerQuartileMllwFt": 1.483
         },
         {
           "validUtc": "2026-09-25T07:00:00.000Z",
           "modelLeadHours": 43.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 2.683,
+          "issuedMeanMllwFt": 2.578,
           "astronomicalTideMllwFt": 0.586,
-          "correctedCentralMllwFt": 2.035,
+          "correctedCentralMllwFt": 1.975,
           "issuedLower10MllwFt": 2.483,
-          "estimatedLowerQuartileMllwFt": 1.795
+          "estimatedLowerQuartileMllwFt": 1.745
         },
         {
           "validUtc": "2026-09-25T08:00:00.000Z",
           "modelLeadHours": 44.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 3.865,
+          "issuedMeanMllwFt": 3.76,
           "astronomicalTideMllwFt": 1.768,
-          "correctedCentralMllwFt": 3.215,
+          "correctedCentralMllwFt": 3.155,
           "issuedLower10MllwFt": 3.665,
-          "estimatedLowerQuartileMllwFt": 2.975
+          "estimatedLowerQuartileMllwFt": 2.925
         },
         {
           "validUtc": "2026-09-25T09:00:00.000Z",
           "modelLeadHours": 45.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 5.511,
+          "issuedMeanMllwFt": 5.406,
           "astronomicalTideMllwFt": 3.414,
-          "correctedCentralMllwFt": 4.859,
+          "correctedCentralMllwFt": 4.799,
           "issuedLower10MllwFt": 5.311,
-          "estimatedLowerQuartileMllwFt": 4.619
+          "estimatedLowerQuartileMllwFt": 4.569
         },
         {
           "validUtc": "2026-09-25T10:00:00.000Z",
           "modelLeadHours": 46.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 7.0,
+          "issuedMeanMllwFt": 6.842,
           "astronomicalTideMllwFt": 4.803,
-          "correctedCentralMllwFt": 6.304,
+          "correctedCentralMllwFt": 6.213,
           "issuedLower10MllwFt": 6.7,
-          "estimatedLowerQuartileMllwFt": 6.053
+          "estimatedLowerQuartileMllwFt": 5.978
         },
         {
           "validUtc": "2026-09-25T11:00:00.000Z",
           "modelLeadHours": 47.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 7.851,
+          "issuedMeanMllwFt": 7.64,
           "astronomicalTideMllwFt": 5.654,
-          "correctedCentralMllwFt": 7.152,
+          "correctedCentralMllwFt": 7.032,
           "issuedLower10MllwFt": 7.451,
-          "estimatedLowerQuartileMllwFt": 6.892
+          "estimatedLowerQuartileMllwFt": 6.792
         },
         {
           "validUtc": "2026-09-25T12:00:00.000Z",
           "modelLeadHours": 48.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 8.083,
+          "issuedMeanMllwFt": 7.925,
           "astronomicalTideMllwFt": 5.886,
-          "correctedCentralMllwFt": 7.382,
+          "correctedCentralMllwFt": 7.292,
           "issuedLower10MllwFt": 7.783,
-          "estimatedLowerQuartileMllwFt": 7.131
+          "estimatedLowerQuartileMllwFt": 7.057
         },
         {
           "validUtc": "2026-09-25T13:00:00.000Z",
           "modelLeadHours": 49.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 7.634,
+          "issuedMeanMllwFt": 7.476,
           "astronomicalTideMllwFt": 5.437,
-          "correctedCentralMllwFt": 6.932,
+          "correctedCentralMllwFt": 6.842,
           "issuedLower10MllwFt": 7.334,
-          "estimatedLowerQuartileMllwFt": 6.681
+          "estimatedLowerQuartileMllwFt": 6.607
         },
         {
           "validUtc": "2026-09-25T14:00:00.000Z",
           "modelLeadHours": 50.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 6.62,
+          "issuedMeanMllwFt": 6.462,
           "astronomicalTideMllwFt": 4.423,
-          "correctedCentralMllwFt": 5.918,
+          "correctedCentralMllwFt": 5.828,
           "issuedLower10MllwFt": 6.32,
-          "estimatedLowerQuartileMllwFt": 5.666
+          "estimatedLowerQuartileMllwFt": 5.592
         },
         {
           "validUtc": "2026-09-25T15:00:00.000Z",
           "modelLeadHours": 51.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 5.472,
+          "issuedMeanMllwFt": 5.261,
           "astronomicalTideMllwFt": 3.175,
-          "correctedCentralMllwFt": 4.726,
+          "correctedCentralMllwFt": 4.606,
           "issuedLower10MllwFt": 5.072,
-          "estimatedLowerQuartileMllwFt": 4.464
+          "estimatedLowerQuartileMllwFt": 4.365
         },
         {
           "validUtc": "2026-09-25T16:00:00.000Z",
           "modelLeadHours": 52.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 4.333,
+          "issuedMeanMllwFt": 4.122,
           "astronomicalTideMllwFt": 2.036,
-          "correctedCentralMllwFt": 3.586,
+          "correctedCentralMllwFt": 3.466,
           "issuedLower10MllwFt": 3.933,
-          "estimatedLowerQuartileMllwFt": 3.323
+          "estimatedLowerQuartileMllwFt": 3.225
         },
         {
           "validUtc": "2026-09-25T17:00:00.000Z",
           "modelLeadHours": 53.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 3.559,
+          "issuedMeanMllwFt": 3.348,
           "astronomicalTideMllwFt": 1.162,
-          "correctedCentralMllwFt": 2.768,
+          "correctedCentralMllwFt": 2.648,
           "issuedLower10MllwFt": 3.159,
-          "estimatedLowerQuartileMllwFt": 2.505
+          "estimatedLowerQuartileMllwFt": 2.406
         },
         {
           "validUtc": "2026-09-25T18:00:00.000Z",
           "modelLeadHours": 54.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 3.005,
+          "issuedMeanMllwFt": 2.794,
           "astronomicalTideMllwFt": 0.608,
-          "correctedCentralMllwFt": 2.213,
+          "correctedCentralMllwFt": 2.093,
           "issuedLower10MllwFt": 2.605,
-          "estimatedLowerQuartileMllwFt": 1.95
+          "estimatedLowerQuartileMllwFt": 1.851
         },
         {
           "validUtc": "2026-09-25T19:00:00.000Z",
           "modelLeadHours": 55.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 3.104,
+          "issuedMeanMllwFt": 2.893,
           "astronomicalTideMllwFt": 0.607,
-          "correctedCentralMllwFt": 2.268,
+          "correctedCentralMllwFt": 2.148,
           "issuedLower10MllwFt": 2.704,
-          "estimatedLowerQuartileMllwFt": 2.004
+          "estimatedLowerQuartileMllwFt": 1.905
         },
         {
           "validUtc": "2026-09-25T20:00:00.000Z",
           "modelLeadHours": 56.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 3.995,
+          "issuedMeanMllwFt": 3.784,
           "astronomicalTideMllwFt": 1.498,
-          "correctedCentralMllwFt": 3.158,
+          "correctedCentralMllwFt": 3.038,
           "issuedLower10MllwFt": 3.595,
-          "estimatedLowerQuartileMllwFt": 2.894
+          "estimatedLowerQuartileMllwFt": 2.795
         },
         {
           "validUtc": "2026-09-25T21:00:00.000Z",
           "modelLeadHours": 57.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 5.729,
+          "issuedMeanMllwFt": 5.466,
           "astronomicalTideMllwFt": 3.132,
-          "correctedCentralMllwFt": 4.847,
+          "correctedCentralMllwFt": 4.699,
           "issuedLower10MllwFt": 5.229,
-          "estimatedLowerQuartileMllwFt": 4.573
+          "estimatedLowerQuartileMllwFt": 4.45
         },
         {
           "validUtc": "2026-09-25T22:00:00.000Z",
           "modelLeadHours": 58.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 7.329,
+          "issuedMeanMllwFt": 7.066,
           "astronomicalTideMllwFt": 4.732,
-          "correctedCentralMllwFt": 6.447,
+          "correctedCentralMllwFt": 6.298,
           "issuedLower10MllwFt": 6.829,
-          "estimatedLowerQuartileMllwFt": 6.172
+          "estimatedLowerQuartileMllwFt": 6.049
         },
         {
           "validUtc": "2026-09-25T23:00:00.000Z",
           "modelLeadHours": 59.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 8.377,
+          "issuedMeanMllwFt": 8.166,
           "astronomicalTideMllwFt": 5.78,
-          "correctedCentralMllwFt": 7.494,
+          "correctedCentralMllwFt": 7.374,
           "issuedLower10MllwFt": 7.977,
-          "estimatedLowerQuartileMllwFt": 7.228
+          "estimatedLowerQuartileMllwFt": 7.13
         },
         {
           "validUtc": "2026-09-26T00:00:00.000Z",
           "modelLeadHours": 60.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 8.762,
+          "issuedMeanMllwFt": 8.551,
           "astronomicalTideMllwFt": 6.165,
-          "correctedCentralMllwFt": 7.878,
+          "correctedCentralMllwFt": 7.758,
           "issuedLower10MllwFt": 8.362,
-          "estimatedLowerQuartileMllwFt": 7.612
+          "estimatedLowerQuartileMllwFt": 7.514
         },
         {
           "validUtc": "2026-09-26T01:00:00.000Z",
           "modelLeadHours": 61.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 8.447,
+          "issuedMeanMllwFt": 8.236,
           "astronomicalTideMllwFt": 5.85,
-          "correctedCentralMllwFt": 7.562,
+          "correctedCentralMllwFt": 7.442,
           "issuedLower10MllwFt": 8.047,
-          "estimatedLowerQuartileMllwFt": 7.295
+          "estimatedLowerQuartileMllwFt": 7.197
         },
         {
           "validUtc": "2026-09-26T02:00:00.000Z",
           "modelLeadHours": 62.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 7.482,
+          "issuedMeanMllwFt": 7.219,
           "astronomicalTideMllwFt": 4.885,
-          "correctedCentralMllwFt": 6.596,
+          "correctedCentralMllwFt": 6.447,
           "issuedLower10MllwFt": 6.982,
-          "estimatedLowerQuartileMllwFt": 6.319
+          "estimatedLowerQuartileMllwFt": 6.197
         },
         {
           "validUtc": "2026-09-26T03:00:00.000Z",
           "modelLeadHours": 63.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 6.234,
+          "issuedMeanMllwFt": 5.971,
           "astronomicalTideMllwFt": 3.537,
-          "correctedCentralMllwFt": 5.303,
+          "correctedCentralMllwFt": 5.155,
           "issuedLower10MllwFt": 5.734,
-          "estimatedLowerQuartileMllwFt": 5.026
+          "estimatedLowerQuartileMllwFt": 4.904
         },
         {
           "validUtc": "2026-09-26T04:00:00.000Z",
           "modelLeadHours": 64.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 4.885,
+          "issuedMeanMllwFt": 4.622,
           "astronomicalTideMllwFt": 2.188,
-          "correctedCentralMllwFt": 3.953,
+          "correctedCentralMllwFt": 3.805,
           "issuedLower10MllwFt": 4.385,
-          "estimatedLowerQuartileMllwFt": 3.676
+          "estimatedLowerQuartileMllwFt": 3.554
         },
         {
           "validUtc": "2026-09-26T05:00:00.000Z",
           "modelLeadHours": 65.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 3.902,
+          "issuedMeanMllwFt": 3.586,
           "astronomicalTideMllwFt": 1.105,
-          "correctedCentralMllwFt": 2.925,
+          "correctedCentralMllwFt": 2.747,
           "issuedLower10MllwFt": 3.302,
-          "estimatedLowerQuartileMllwFt": 2.637
+          "estimatedLowerQuartileMllwFt": 2.491
         },
         {
           "validUtc": "2026-09-26T06:00:00.000Z",
           "modelLeadHours": 66.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 3.169,
+          "issuedMeanMllwFt": 2.853,
           "astronomicalTideMllwFt": 0.372,
-          "correctedCentralMllwFt": 2.191,
+          "correctedCentralMllwFt": 2.014,
           "issuedLower10MllwFt": 2.569,
-          "estimatedLowerQuartileMllwFt": 1.903
+          "estimatedLowerQuartileMllwFt": 1.757
         },
         {
           "validUtc": "2026-09-26T07:00:00.000Z",
           "modelLeadHours": 67.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 2.935,
+          "issuedMeanMllwFt": 2.619,
           "astronomicalTideMllwFt": 0.138,
-          "correctedCentralMllwFt": 1.956,
+          "correctedCentralMllwFt": 1.779,
           "issuedLower10MllwFt": 2.335,
-          "estimatedLowerQuartileMllwFt": 1.667
+          "estimatedLowerQuartileMllwFt": 1.521
         },
         {
           "validUtc": "2026-09-26T08:00:00.000Z",
           "modelLeadHours": 68.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 3.551,
+          "issuedMeanMllwFt": 3.288,
           "astronomicalTideMllwFt": 0.754,
-          "correctedCentralMllwFt": 2.571,
+          "correctedCentralMllwFt": 2.423,
           "issuedLower10MllwFt": 3.051,
-          "estimatedLowerQuartileMllwFt": 2.292
+          "estimatedLowerQuartileMllwFt": 2.171
         },
         {
           "validUtc": "2026-09-26T09:00:00.000Z",
           "modelLeadHours": 69.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 5.133,
+          "issuedMeanMllwFt": 4.87,
           "astronomicalTideMllwFt": 2.336,
-          "correctedCentralMllwFt": 4.152,
+          "correctedCentralMllwFt": 4.005,
           "issuedLower10MllwFt": 4.633,
-          "estimatedLowerQuartileMllwFt": 3.872
+          "estimatedLowerQuartileMllwFt": 3.751
         },
         {
           "validUtc": "2026-09-26T10:00:00.000Z",
           "modelLeadHours": 70.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 6.901,
+          "issuedMeanMllwFt": 6.638,
           "astronomicalTideMllwFt": 4.204,
-          "correctedCentralMllwFt": 5.963,
+          "correctedCentralMllwFt": 5.816,
           "issuedLower10MllwFt": 6.401,
-          "estimatedLowerQuartileMllwFt": 5.683
+          "estimatedLowerQuartileMllwFt": 5.562
         },
         {
           "validUtc": "2026-09-26T11:00:00.000Z",
           "modelLeadHours": 71.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 8.256,
+          "issuedMeanMllwFt": 7.94,
           "astronomicalTideMllwFt": 5.559,
-          "correctedCentralMllwFt": 7.317,
+          "correctedCentralMllwFt": 7.14,
           "issuedLower10MllwFt": 7.656,
-          "estimatedLowerQuartileMllwFt": 7.026
+          "estimatedLowerQuartileMllwFt": 6.881
         },
         {
           "validUtc": "2026-09-26T12:00:00.000Z",
           "modelLeadHours": 72.0,
           "availability": "experimental",
           "support": "in-range",
-          "issuedMeanMllwFt": 8.783,
+          "issuedMeanMllwFt": 8.52,
           "astronomicalTideMllwFt": 6.186,
-          "correctedCentralMllwFt": 7.887,
+          "correctedCentralMllwFt": 7.74,
           "issuedLower10MllwFt": 8.283,
-          "estimatedLowerQuartileMllwFt": 7.606
+          "estimatedLowerQuartileMllwFt": 7.485
         },
         {
           "validUtc": "2026-09-26T13:00:00.000Z",
