@@ -473025,6 +473025,17 @@
       "historySource": "USGS 01392650 primary continuous record",
       "source": "primary-usgs-continuous",
       "localDate": "2026-10-24"
+    },
+    {
+      "t": "2026-10-25T10:54:00.000Z",
+      "ft": 3.3,
+      "type": "Below",
+      "crest": "2026-10-25T11:49:00.000Z",
+      "kind": "CrestHigh",
+      "historyAgency": "USGS",
+      "historySource": "USGS 01392650 primary continuous record",
+      "source": "primary-usgs-continuous",
+      "localDate": "2026-10-25"
     }
   ],
   "site": "01392650",
@@ -473037,5 +473048,5 @@
     "moderateLow": 5.47,
     "majorLow": 6.97
   },
-  "lastProcessedISO": "2026-10-25T10:24:00.000Z"
+  "lastProcessedISO": "2026-10-25T10:54:00.000Z"
 }
