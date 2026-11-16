@@ -1,0 +1,30 @@
+{
+  "source": "individual_site_predictions",
+  "method": {
+    "detrending": "high_ft_navd88 - quality_controlled_site_linear_sea_level_trend_ft_per_year * (event_decimal_year - 2026)",
+    "trend": "NOAA official relative mean sea-level trend for NOAA-backed series; quality-controlled deseasonalized local regression for USGS series",
+    "futureFit": "empirical residual exceedance probabilities evaluated at gauge sea-level scenario deltas",
+    "uncertainty": "analytical binomial p05/p50/p95 count approximation for annual high-tide draws; no Monte Carlo sampling",
+    "bins": "exclusive minor/moderate/major NAVD88 threshold bins",
+    "crestHandling": "official same-day crest overrides are retained; crest-only supplemental history is excluded from the daily high-tide sampling pool"
+  },
+  "status": "no-high-tide-pool",
+  "highTideCount": 0,
+  "trendFtPerYear": 0.00967848,
+  "trendSource": {
+    "station": "8518750",
+    "source": "NOAA monthly_mean MSL",
+    "datum": "MSL",
+    "trendMethod": "NOAA_official_linear_relative_mean_sea_level_trend",
+    "monthlyPoints": 1513,
+    "rawSlopeFtPerYear": 0.010445,
+    "minimumDailyValuesPerMonth": null,
+    "excludedMonths": []
+  },
+  "scenarios": {
+    "Baseline": [],
+    "Low": [],
+    "Intermediate": [],
+    "High": []
+  }
+}
