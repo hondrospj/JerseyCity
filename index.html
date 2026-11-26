@@ -3889,7 +3889,42 @@ async function fetchFirstOkJson(urls){
   throw new Error("PETSS JSON not found. Tried: " + errs.join(" | "));
 }
 
+const SHARED_LEGACY_PETSS_URL = "https://hondrospj.github.io/statewide-service/data/petss_forecasts_all_mllw.json";
+const SHARED_LEGACY_PETSS_STATION = "8530743";
+
+async function fetchSharedLegacyPETSS(){
+  const response = await fetch(SHARED_LEGACY_PETSS_URL, {cache:"no-cache", signal:AbortSignal.timeout(8000)});
+  if(!response.ok) throw new Error(`Shared PETSS returned HTTP ${response.status}`);
+  const feed = await response.json();
+  const issuedTime = feed?.model_time_utc;
+  const issue = Date.parse(issuedTime);
+  const now = Date.now();
+  const hour = 3600000;
+  const rows = feed?.stations?.[SHARED_LEGACY_PETSS_STATION]?.points;
+  if(feed?.datum !== "MLLW" || feed.forecast_statistic !== "ensemble_mean" || feed.value_column !== "TWL" ||
+     !(issue <= now && now - issue <= 24 * hour) || issue % (6 * hour) !== 0 || !Array.isArray(rows)){
+    throw new Error("Shared PETSS failed its station, datum, or issue checks");
+  }
+  const points = normalizePetssJsonToPoints(rows.map(row => ({t:row.t, source_twl_mean:row.fcst})));
+  if(points.length !== rows.length || Date.parse(points.at(-1)?.t) < now + 72 * hour ||
+     points.some((point, index) => index > 0 && Date.parse(point.t) - Date.parse(points[index-1].t) !== hour)){
+    throw new Error("Shared PETSS forecast has incomplete hourly coverage");
+  }
+  return {issuedTime, points, urlUsed:SHARED_LEGACY_PETSS_URL};
+}
+
 async function fetchPETSSForecast_MLLW(){
+  const [local, shared] = await Promise.allSettled([
+    fetchLocalPETSSForecast_MLLW(), fetchSharedLegacyPETSS(),
+  ]);
+  if(shared.status === "fulfilled" && (local.status === "rejected" ||
+      !Number.isFinite(Date.parse(local.value.issuedTime)) ||
+      Date.parse(shared.value.issuedTime) > Date.parse(local.value.issuedTime))) return shared.value;
+  if(local.status === "fulfilled") return local.value;
+  throw local.reason;
+}
+
+async function fetchLocalPETSSForecast_MLLW(){
   const { url, json } = await fetchFirstOkJson(PETSS_JSON_CANDIDATES);
   let meta = null;
   try{
